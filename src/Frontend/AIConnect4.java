@@ -273,31 +273,7 @@ public class AIConnect4 {
     }
 
 
-    public static void main(String[] args) {
-        initialize_board();
 
-
-		/*
-		while(true) {
-			Scanner input = new Scanner(System.in);
-
-			int new_column = input.nextInt();
-	        update_board(Board, new_column, PLAYER);
-	        System.out.println(Arrays.deepToString(Board).replace("], ", "]\n").replace("[[", "[").replace("]]", "]"));
-	        if(is_terminal(Board))
-	        	 break;
-
-	        System.out.println();
-
-	        new_column = getAIMove(Board);
-	        update_board(Board, new_column, COMPUTER);
-	        System.out.println(Arrays.deepToString(Board).replace("], ", "]\n").replace("[[", "[").replace("]]", "]"));
-	        if(is_terminal(Board))
-	        	break;
-		}
-		 System.out.println("Game Over !");
-*/
-    }
 
 
 }

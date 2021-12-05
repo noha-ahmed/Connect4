@@ -1,16 +1,10 @@
 package Frontend;
 
 import javafx.animation.TranslateTransition;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Point2D;
-import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
@@ -20,9 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -30,14 +22,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Controller implements Initializable {
     //constants
     private static final int TILE_SIZE = 80;
     private static final int COLUMNS = 7;
     private static final int ROWS = 6;
+    private static final int COMPUTER = 1;
+    public static final int PLAYER = 2;
+    private GameHelper gameHelper=new GameHelper();
     //used components
     private Disc[][] grid = new Disc[COLUMNS][ROWS];
     @FXML
@@ -48,7 +41,7 @@ public class Controller implements Initializable {
     public Pane discRoot = new Pane();
     @FXML
     public Pane connect4Pane = new Pane();
-    private Text textWinnerMessage = new Text();
+    public static Text textWinnerMessage = new Text();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -58,111 +51,43 @@ public class Controller implements Initializable {
         connect4Pane.getChildren().addAll(makeColumns());
     }
     public void handle(ActionEvent event) {
-        startNewGame();
+        initializeGame();
         if(event.getSource()==buttonComputerStart){
         placeDisc(new Disc(false), AIConnect4.getAIMove(),false);}
     }
-    private static class Disc extends Circle {
-        private final boolean red;
+    public static class Disc extends Circle {
+        private final boolean color;
 
-        public Disc(boolean red) {
-            super(TILE_SIZE / 2, red ? Color.RED : Color.YELLOW);
-            this.red = red;
+        public Disc(boolean color) {
+            super(TILE_SIZE / 2, color ? Color.RED : Color.YELLOW);
+            this.color = color;
 
             setCenterX(TILE_SIZE / 2);
             setCenterY(TILE_SIZE / 2);
+        }
+        public boolean getColor(){
+            return color;
         }
 
     }
 
 
-/*
-
-    private Parent createContent() {
-        VBox root = new VBox();
-        root.setAlignment(Pos.CENTER);
-        root.setSpacing(10);
-        root.setPadding(new Insets(10));
-
-
-        //Make the player start button
-        buttonPlayerStart.setStyle("-fx-font-weight: bold;-fx-font-size: 18");
-        buttonPlayerStart.setTextFill(Color.RED);
-        buttonPlayerStart.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                startNewGame();
-
-
-            }
-        });
-
-        //Make the player start button
-        buttonComputerStart.setStyle("-fx-font-weight: bold;-fx-font-size: 18");
-        buttonComputerStart.setTextFill(Color.valueOf("#ccdd16"));
-        buttonComputerStart.setVisible(true);
-        buttonComputerStart.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                startNewGame();
-                placeDisc(new Disc(false), AIConnect4.getAIMove(),false);
-            }
-        });
-        //make the repeat button
-        buttonRepeat.setStyle("-fx-font-weight: bold;-fx-font-size: 18");
-        buttonRepeat.setVisible(true);
-        buttonRepeat.setTextFill(Color.FORESTGREEN);
-        buttonRepeat.setVisible(false);
-        buttonRepeat.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                buttonPlayerStart.setVisible(true);
-                buttonComputerStart.setVisible(true);
-                buttonRepeat.setVisible(false);
-
-            }
-        });
-
-
-        textWinnerMessage.setFont(Font.font(18));
-        textWinnerMessage.setStyle("-fx-font-weight: bold");
-
-
-        HBox hBoxButtons = new HBox();
-        hBoxButtons.setAlignment(Pos.CENTER_LEFT);
-        hBoxButtons.setSpacing(60);
-        hBoxButtons.getChildren().addAll(buttonPlayerStart, buttonRepeat, buttonComputerStart);
-        hBoxButtons.setAlignment(Pos.CENTER);
-
-        root.getChildren().add(hBoxButtons);
-        root.getChildren().add(textWinnerMessage);
-        Shape gridShape = makeGrid();
-
-        connect4Pane.getChildren().add(discRoot);
-        connect4Pane.getChildren().add(gridShape);
-        connect4Pane.getChildren().addAll(makeColumns());
-        freezeConnect4Board();
-        root.getChildren().add(connect4Pane);
-        return root;
-    }
-*/
-    private void freezeConnect4Board() {
+    public  void disablePane() {
         connect4Pane.setDisable(true);
     }
 
-    private void unfreezeConnect4Board() {
+    public  void enablePane() {
         connect4Pane.setDisable(false);
-
     }
 
-    private void startNewGame() {
+    private void initializeGame() {
         buttonComputerStart.setVisible(false);
         buttonPlayerStart.setVisible(false);
         textWinnerMessage.setVisible(false);
         grid = new Disc[COLUMNS][ROWS];
-        discRoot.getChildren().clear();
-        AIConnect4.initialize_board();
-        unfreezeConnect4Board();
+//        discRoot.getChildren().clear();
+//        AIConnect4.initialize_board();
+        enablePane();
     }
 
     private Shape makeGrid() {
@@ -175,7 +100,6 @@ public class Controller implements Initializable {
                 circle.setCenterY(TILE_SIZE / 2);
                 circle.setTranslateX(x * (TILE_SIZE + 5) + TILE_SIZE / 4);
                 circle.setTranslateY(y * (TILE_SIZE + 5) + TILE_SIZE / 4);
-
                 shape = Shape.subtract(shape, circle);
             }
         }
@@ -183,11 +107,9 @@ public class Controller implements Initializable {
         Light.Distant light = new Light.Distant();
         light.setAzimuth(45.0);
         light.setElevation(30.0);
-
         Lighting lighting = new Lighting();
         lighting.setLight(light);
         lighting.setSurfaceScale(5.0);
-
         shape.setFill(Color.BLUE);
         shape.setEffect(lighting);
 
@@ -209,12 +131,9 @@ public class Controller implements Initializable {
             rect.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-
-
-                    // player move
                     placeDisc(new Disc(true), column,true);
-                    AIConnect4.update_board(column, AIConnect4.PLAYER);
-
+                    //update the board at the backend
+                 //   AIConnect4.update_board(column, PLAYER);
                 }
             });
 
@@ -225,8 +144,8 @@ public class Controller implements Initializable {
     }
 
     private void placeDisc(Disc disc, int column,boolean playerTurn) {
-        freezeConnect4Board();
-        boolean redMove = disc.red;
+        disablePane();
+        boolean redMove = disc.getColor();
         int row = ROWS - 1;
         do {
             if (!getDisc(column, row).isPresent())
@@ -247,8 +166,8 @@ public class Controller implements Initializable {
         TranslateTransition animation = new TranslateTransition(Duration.seconds(0.5), disc);
         animation.setToY(row * (TILE_SIZE + 5) + TILE_SIZE / 4);
         animation.setOnFinished(e -> {
-            if (gameEnded(column, currentRow, redMove)) {
-                gameOver(redMove);
+            if (gameHelper.gameEnded(column, currentRow, redMove)) {
+                gameHelper.gameOver(redMove);
                 return;
             } else if (playerTurn) {
 
@@ -257,70 +176,15 @@ public class Controller implements Initializable {
                 //next turn is player
 
             }
-            unfreezeConnect4Board();
+            enablePane();
         });
         animation.play();
 
 
     }
 
-    private boolean gameEnded(int column, int row, boolean redMove) {
-        List<Point2D> vertical = IntStream.rangeClosed(row - 3, row + 3)
-                .mapToObj(r -> new Point2D(column, r))
-                .collect(Collectors.toList());
 
-        List<Point2D> horizontal = IntStream.rangeClosed(column - 3, column + 3)
-                .mapToObj(c -> new Point2D(c, row))
-                .collect(Collectors.toList());
-
-        Point2D topLeft = new Point2D(column - 3, row - 3);
-        List<Point2D> diagonal1 = IntStream.rangeClosed(0, 6)
-                .mapToObj(i -> topLeft.add(i, i))
-                .collect(Collectors.toList());
-
-        Point2D botLeft = new Point2D(column - 3, row + 3);
-        List<Point2D> diagonal2 = IntStream.rangeClosed(0, 6)
-                .mapToObj(i -> botLeft.add(i, -i))
-                .collect(Collectors.toList());
-
-        return checkRange(vertical, redMove) || checkRange(horizontal, redMove)
-                || checkRange(diagonal1, redMove) || checkRange(diagonal2, redMove);
-    }
-
-    private boolean checkRange(List<Point2D> points, boolean redMove) {
-        int chain = 0;
-
-        for (Point2D p : points) {
-            int column = (int) p.getX();
-            int row = (int) p.getY();
-
-            Disc disc = getDisc(column, row).orElse(new Disc(!redMove));
-            if (disc.red == redMove) {
-                chain++;
-                if (chain == 4) {
-                    return true;
-                }
-            } else {
-                chain = 0;
-            }
-        }
-
-        return false;
-    }
-
-    private void gameOver(boolean redMove) {
-        String winningMessage = "The Winner is the " + (redMove ? "Red" : "Yellow") + " player";
-        //System.out.println(winningMessage);
-        textWinnerMessage.setText(winningMessage);
-        textWinnerMessage.setVisible(true);
-        if (redMove)
-            textWinnerMessage.setFill(Color.RED);
-        else
-            textWinnerMessage.setFill(Color.valueOf("#ccdd16"));
-        freezeConnect4Board();
-    }
-
-    private Optional<Disc> getDisc(int column, int row) {
+    public Optional<Disc> getDisc(int column, int row) {
         if (column < 0 || column >= COLUMNS
                 || row < 0 || row >= ROWS)
             return Optional.empty();
