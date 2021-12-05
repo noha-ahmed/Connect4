@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane prefHeight="657.0" prefWidth="1091.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Frontend.Controller">
+   <children>
+      <Pane fx:id="connect4Pane" layoutX="398.0" layoutY="44.0" prefHeight="200.0" prefWidth="200.0" />
+      <Pane layoutX="41.0" layoutY="117.0" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: black;">
+         <children>
+            <Button fx:id="buttonComputerStart" layoutX="72.0" layoutY="27.0" mnemonicParsing="false" onAction="#handle" text="com" />
+            <Button fx:id="buttonPlayerStart" layoutX="74.0" layoutY="88.0" mnemonicParsing="false" onAction="#handle" text="pl" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
