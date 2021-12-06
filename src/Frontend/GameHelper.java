@@ -9,7 +9,10 @@ import java.util.stream.IntStream;
 
 public class GameHelper {
 
-public Controller controller=new Controller();
+   public Controller controller;
+   public  void setController(Controller c){
+       controller=c;
+   }
 
     public   boolean gameEnded(int column, int row, boolean redMove) {
         List<Point2D> vertical = IntStream.rangeClosed(row - 3, row + 3)
