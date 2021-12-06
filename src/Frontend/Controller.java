@@ -30,7 +30,7 @@ public class Controller implements Initializable {
     private static final int ROWS = 6;
     private static final int COMPUTER = 1;
     public static final int PLAYER = 2;
-    private GameHelper gameHelper=new GameHelper();
+    public GameHelper gameHelper;
     //used components
     private Disc[][] grid = new Disc[COLUMNS][ROWS];
     @FXML
@@ -45,6 +45,8 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        gameHelper=new GameHelper();
+        gameHelper.setController(this);
         connect4Pane.getChildren().add(discRoot);
         Shape gridShape = makeGrid();
         connect4Pane.getChildren().add(gridShape);
@@ -53,7 +55,8 @@ public class Controller implements Initializable {
     public void handle(ActionEvent event) {
         initializeGame();
         if(event.getSource()==buttonComputerStart){
-        placeDisc(new Disc(false), AIConnect4.getAIMove(),false);}
+        placeDisc(new Disc(false), AIConnect4.getAIMove(),false);
+        }
     }
     public static class Disc extends Circle {
         private final boolean color;
@@ -86,7 +89,7 @@ public class Controller implements Initializable {
         textWinnerMessage.setVisible(false);
         grid = new Disc[COLUMNS][ROWS];
 //        discRoot.getChildren().clear();
-//        AIConnect4.initialize_board();
+        AIConnect4.initialize_board();
         enablePane();
     }
 
@@ -105,7 +108,7 @@ public class Controller implements Initializable {
         }
 
         Light.Distant light = new Light.Distant();
-        light.setAzimuth(45.0);
+        light.setAzimuth(30.0);
         light.setElevation(30.0);
         Lighting lighting = new Lighting();
         lighting.setLight(light);
@@ -133,7 +136,7 @@ public class Controller implements Initializable {
                 public void handle(MouseEvent event) {
                     placeDisc(new Disc(true), column,true);
                     //update the board at the backend
-                 //   AIConnect4.update_board(column, PLAYER);
+                   AIConnect4.update_board(column, PLAYER);
                 }
             });
 
