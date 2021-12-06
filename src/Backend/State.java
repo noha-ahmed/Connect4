@@ -9,10 +9,12 @@ public class State implements Cloneable{
 
     private static int[][] board;
     private int[] freeCells;
+    private EvaluationState evaluationState;
 
     public void getInitialState(){
         this.board = new int[this.ROW_COUNT][this.COLUMNS_COUNT];
         this.freeCells = new int[7];
+        this.evaluationState = new EvaluationState();
     }
 
     public int findColumn(State newState){
@@ -35,6 +37,7 @@ public class State implements Cloneable{
             newState = (State) this.clone();
             newState.board[freeCells[columnNum]][columnNum] = this.COMPUTER_TURN;
             newState.freeCells[columnNum] += 1;
+            newState.evaluationState.setFromColumn(columnNum);
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
@@ -63,6 +66,7 @@ public class State implements Cloneable{
         State newState = new State();
         newState.freeCells = this.freeCells.clone();
         newState.board = this.board.clone();
+        newState.evaluationState = new EvaluationState();
         return newState;
     }
     public int[] getFreeCells() {
@@ -79,6 +83,14 @@ public class State implements Cloneable{
 
     public static void setBoard(int[][] board) {
         State.board = board;
+    }
+
+    public EvaluationState getEvaluationState() {
+        return evaluationState;
+    }
+
+    public void setEvaluationState(EvaluationState evaluationState) {
+        this.evaluationState = evaluationState;
     }
 }
 class test{
