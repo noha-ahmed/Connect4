@@ -27,14 +27,14 @@ public class State implements Cloneable{
         return colNum;
     }
 
-    public State getChild(int columNum){
+    public State getChild(int columnNum){
         State newState = null;
-        if(this.freeCells[columNum] == 6)
+        if(this.freeCells[columnNum] == 6)
             return newState;
         try {
             newState = (State) this.clone();
-            newState.getBoard()[freeCells[columNum]][columNum] = this.COMPUTER_TURN;
-            newState.getFreeCells()[columNum] += 1;
+            newState.board[freeCells[columnNum]][columnNum] = this.COMPUTER_TURN;
+            newState.freeCells[columnNum] += 1;
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
@@ -64,8 +64,8 @@ public class State implements Cloneable{
      */
     public State clone() throws CloneNotSupportedException{
         State newState = new State();
-        newState.setFreeCells(this.freeCells.clone());
-        newState.setBoard(this.board.clone());
+        newState.freeCells = this.freeCells.clone();
+        newState.board = this.board.clone();
         return newState;
     }
     public int[] getFreeCells() {
