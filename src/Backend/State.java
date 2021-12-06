@@ -11,7 +11,7 @@ public class State implements Cloneable{
     private int[] freeCells;
     private EvaluationState evaluationState;
 
-    public void getInitialState(){
+    public void createInitialState(){
         this.board = new int[this.ROW_COUNT][this.COLUMNS_COUNT];
         this.freeCells = new int[7];
         this.evaluationState = new EvaluationState();
@@ -96,7 +96,7 @@ public class State implements Cloneable{
 class test{
     public static void main(String[] args){
         State initial = new State();
-        initial.getInitialState();
+        initial.createInitialState();
         State child = initial.getChild(0);
         System.out.println("Done");
     }
