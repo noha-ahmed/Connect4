@@ -41,6 +41,11 @@ public class State implements Cloneable{
         return newState;
     }
 
+    public void updateState(int columnNum){
+        this.board[freeCells[columnNum]][columnNum] = this.COMPUTER_TURN;
+        freeCells[columnNum] ++;
+    }
+
     /*
     value evaluatedValue
     function getInitialState
@@ -49,18 +54,10 @@ public class State implements Cloneable{
     function evaluateState
     function findSpecifiedColumn
 
-
-
     heuristic should :
     2 priorities:
     check if player will win and stop this move
     check if there is w inning move for computer
-
-
-
-
-
-
      */
     public State clone() throws CloneNotSupportedException{
         State newState = new State();
