@@ -9,10 +9,12 @@ public class MinimaxWithoutPruning implements IMinimax{
         }
         for(int i=0; i<7; i++){
             State child = state.getChild(i);
-            child.setEvaluationState(Minimize(child,k-1));
-            state.getEvaluationState().addChild(child.getEvaluationState());
-            if(child.getEvaluationState().getEvaluationValue()>state.getEvaluationState().getEvaluationValue()){
-                state.getEvaluationState().setEvaluationValue(child.getEvaluationState().getEvaluationValue());
+            if(child!=null){
+                child.setEvaluationState(Minimize(child,k-1));
+                state.getEvaluationState().addChild(child.getEvaluationState());
+                if(child.getEvaluationState().getEvaluationValue()>state.getEvaluationState().getEvaluationValue()){
+                    state.getEvaluationState().setEvaluationValue(child.getEvaluationState().getEvaluationValue());
+                }
             }
         }
         return state.getEvaluationState();
@@ -25,10 +27,12 @@ public class MinimaxWithoutPruning implements IMinimax{
         }
         for(int i=0; i<7; i++){
             State child = state.getChild(i);
-            child.setEvaluationState(Maximize(child,k-1));
-            state.getEvaluationState().addChild(child.getEvaluationState());
-            if(child.getEvaluationState().getEvaluationValue()<state.getEvaluationState().getEvaluationValue()){
-                state.getEvaluationState().setEvaluationValue(child.getEvaluationState().getEvaluationValue());
+            if(child!=null){
+                child.setEvaluationState(Maximize(child,k-1));
+                state.getEvaluationState().addChild(child.getEvaluationState());
+                if(child.getEvaluationState().getEvaluationValue()<state.getEvaluationState().getEvaluationValue()){
+                    state.getEvaluationState().setEvaluationValue(child.getEvaluationState().getEvaluationValue());
+                }
             }
         }
         return state.getEvaluationState();
