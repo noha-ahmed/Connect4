@@ -1,11 +1,11 @@
 package Backend;
 
 public class State implements Cloneable{
-    protected static final int EMPTY = 0;
-    protected static final int COMPUTER_TURN = 1;
-    protected static final int PLAYER_TURN = 2;
-    protected static final int ROW_COUNT = 6;
-    protected static final int COLUMNS_COUNT = 7;
+    public static final int EMPTY = 0;
+    public static final int COMPUTER_TURN = 1;
+    public static final int PLAYER_TURN = 2;
+    public static final int ROW_COUNT = 6;
+    public static final int COLUMNS_COUNT = 7;
 
     private static int[][] board;
     private int[] freeCells;
