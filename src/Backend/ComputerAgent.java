@@ -2,7 +2,7 @@ package Backend;
 
 import java.util.Scanner;
 
-public class ComputerAgent {
+public class ComputerAgent implements IComputerAgent {
     IMinimax minimax;
     int level;
     int turns = 0;
