@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class EvaluationState {
     private int evaluationValue;
     private int fromColumn;
-    private ArrayList<EvaluationState> children;
+    private ArrayList<EvaluationState> children = new ArrayList<>();
 
     public EvaluationState(){
         this.children = new ArrayList<>();
