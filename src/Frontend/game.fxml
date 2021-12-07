@@ -15,7 +15,7 @@
          </image>
       </ImageView>
       <Pane fx:id="connect4Pane" layoutX="21.0" layoutY="67.0" prefHeight="555.0" prefWidth="661.0" />
-      <Button id="button" fx:id="restart" layoutX="694.0" layoutY="14.0" mnemonicParsing="false" onAction="#handle" prefHeight="53.0" prefWidth="124.0" style="-fx-border-radius: 40; -fx-border-color: white; -fx-background-radius: 40;" stylesheets="@styleSheet.css" text="Restart">
+      <Button id="button" fx:id="restart" layoutX="694.0" layoutY="14.0" mnemonicParsing="false" onAction="#restart" prefHeight="53.0" prefWidth="124.0" style="-fx-border-radius: 40; -fx-border-color: white; -fx-background-radius: 40;" stylesheets="@styleSheet.css" text="Restart">
          <font>
             <Font name="Comic Sans MS" size="24.0" />
          </font>

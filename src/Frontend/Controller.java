@@ -29,18 +29,21 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import Backend.ComputerAgent;
+import Backend.IComputerAgent;
+import Backend.State;
+
 public class Controller implements Initializable {
     //constants
     private static final int TILE_SIZE = 80;
-    private static final int COLUMNS = 7;
-    private static final int ROWS = 6;
-    private static final int COMPUTER = 1;
-    public static final int PLAYER = 2;
+    private static final int COLUMNS = State.COLUMNS_COUNT;
+    private static final int ROWS = State.ROW_COUNT;
+    private static final int COMPUTER = State.COMPUTER_TURN;
+    public static final int PLAYER = State.PLAYER_TURN;
     public GameHelper gameHelper;
     //used components
     private Disc[][] grid = new Disc[COLUMNS][ROWS];
     public String player="";
-    public String strategy="";
     @FXML
     public Button restart ;
     @FXML
@@ -50,6 +53,7 @@ public class Controller implements Initializable {
     public static Text textWinnerMessage = new Text();
     List<Rectangle> rectangles=new ArrayList<>();
     List<Circle> circles=new ArrayList<>();
+    private IComputerAgent computerAgent;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         disablePane();
@@ -64,25 +68,27 @@ public class Controller implements Initializable {
         connect4Pane.getChildren().addAll(makeRec());
 
     }
-    public void setSettings(String p,String s){
+    public void setSettings(String p,String s, int levels){
         player=p;
-        strategy=s;
+        boolean withPruning = false;
+        if( s =="with alpha-beta pruning")
+            withPruning = true;
+        computerAgent = new ComputerAgent(withPruning, levels);
         start();
     }
     public void start() {
        // homePage home=new homePage();
         initializeGame();
-        System.out.println("hell "+ player);
         if (player.equals("Computer") ) {
-                placeDisc(new Disc(false), AIConnect4.getAIMove(), false);
+                placeDisc(new Disc(false),computerAgent.getFirstMove(), false);
             }
 
     }
-    public void handle(ActionEvent event) {
+    public void restart(ActionEvent event) {
 
         initializeGame();
         if (player.equals("Computer") ) {
-            placeDisc(new Disc(false), AIConnect4.getAIMove(), false);
+            placeDisc(new Disc(false), computerAgent.getFirstMove(), false);
         }
 
     }
@@ -119,7 +125,7 @@ public class Controller implements Initializable {
         grid = new Disc[COLUMNS][ROWS];
         discRoot.getChildren().clear();
         //initialize board in backend
-        AIConnect4.initialize_board();
+        
         enablePane();
     }
 
@@ -178,7 +184,6 @@ public class Controller implements Initializable {
                 public void handle(MouseEvent arg0) {
                     placeDisc(new Disc(true), column,true);
 //                    //update the board at the backend
-                  AIConnect4.update_board(column, PLAYER);
                 }
             });
             list.add(disk);
@@ -202,7 +207,6 @@ public class Controller implements Initializable {
                 public void handle(MouseEvent event) {
                     placeDisc(new Disc(true), column,true);
                     //update the board at the backend
-                   AIConnect4.update_board(column, PLAYER);
                 }
             });
 
@@ -240,7 +244,6 @@ public class Controller implements Initializable {
                 public void handle(MouseEvent event) {
                     placeDisc(new Disc(true), column,true);
                     //update the board at the backend
-                    AIConnect4.update_board(column, PLAYER);
                 }
             });
 
@@ -276,7 +279,6 @@ public class Controller implements Initializable {
                 public void handle(MouseEvent arg0) {
                     placeDisc(new Disc(true), column,true);
 //                    //update the board at the backend
-                    AIConnect4.update_board(column, PLAYER);
                 }
             });
         }
@@ -312,7 +314,7 @@ public class Controller implements Initializable {
             } else if (playerTurn) {
 
                 //if the player played then this is the computer move
-                placeDisc(new Disc(false), AIConnect4.getAIMove(),false);
+                placeDisc(new Disc(false), computerAgent.getNextMove(column),false);
                 //next turn is player
 
             }

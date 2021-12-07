@@ -32,7 +32,7 @@ public class homePage {
                 Scene.setScene(event, root, "Connect4");
                 if (playerTurn.getValue() == null) playerTurn.setValue("Player");
                 if (strategy.getValue() == null) strategy.setValue("with alpha-beta pruning");
-                c.setSettings(playerTurn.getValue(), strategy.getValue());
+                c.setSettings(playerTurn.getValue(), strategy.getValue() , val);
 
 
             } else {
