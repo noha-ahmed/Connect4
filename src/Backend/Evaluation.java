@@ -37,7 +37,6 @@ public class Evaluation {
 
     private static int calculateWeights(int pieces, int oppPiece, int empty){
 
-
         return 0;
     }
 
