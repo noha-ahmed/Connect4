@@ -7,7 +7,7 @@ public class State implements Cloneable{
     public static final int ROW_COUNT = 6;
     public static final int COLUMNS_COUNT = 7;
 
-    private static int[][] board;
+    private int[][] board;
     private int[] freeCells;
     private EvaluationState evaluationState;
 
@@ -34,7 +34,7 @@ public class State implements Cloneable{
         if(this.freeCells[columnNum] == 6)
             return newState;
         try {
-            newState = (State) this.clone();
+            newState = this.clone();
             newState.board[freeCells[columnNum]][columnNum] = this.COMPUTER_TURN;
             newState.freeCells[columnNum] += 1;
             newState.evaluationState.setFromColumn(columnNum);
@@ -70,12 +70,12 @@ public class State implements Cloneable{
         this.freeCells = freeCells;
     }
 
-    public static int[][] getBoard() {
-        return board;
+    public int[][] getBoard() {
+        return this.board;
     }
 
-    public static void setBoard(int[][] board) {
-        State.board = board;
+    public void setBoard(int[][] board) {
+        this.board = board;
     }
 
     public EvaluationState getEvaluationState() {
