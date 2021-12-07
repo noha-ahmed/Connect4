@@ -4,6 +4,7 @@ public class Evaluation {
     private static final int QUADRUPLE_SCORE = 100;
     private static final int TRIPLE_SCORE = 50;
     private static final int DOUBLE_SCORE = 25;
+    private static final int WINDOW_SIZE = 4;
     public static int evaluateScore(int[][] board){
         int evalScore = 0;
 
@@ -45,18 +46,50 @@ public class Evaluation {
 
     private static int evalVerticalWindow(int[][] board, int startRow, int startColumn){
         int compPieces = 0;
-        return 0;
+        int oppPieces = 0;
+        int emptyPieces = 0;
+        for(int i = startRow; i < startRow + Evaluation.WINDOW_SIZE; i++){
+            if(board[i][startColumn] == State.COMPUTER_TURN)
+                compPieces++;
+            else if(board[i][startColumn] == State.PLAYER_TURN)
+                oppPieces++;
+            else
+                emptyPieces++;
+        }
+        return calculateWeights(compPieces, oppPieces, emptyPieces);
     }
 
     private static int evalPDiagonalWindow(int[][] board, int startRow, int startColumn ){
-        return 0;
+        int compPieces = 0;
+        int oppPieces = 0;
+        int emptyPieces = 0;
+        for(int i = startRow; i < startRow + Evaluation.WINDOW_SIZE; i++){
+            if(board[i][startColumn++] == State.COMPUTER_TURN)
+                compPieces++;
+            else if(board[i][startColumn++] == State.PLAYER_TURN)
+                oppPieces++;
+            else
+                emptyPieces++;
+        }
+        return calculateWeights(compPieces, oppPieces, emptyPieces);
     }
 
     private static int evalNDiagonalWindow(int[][] board, int startRow, int startColumn){
-        return 0;
+        int compPieces = 0;
+        int oppPieces = 0;
+        int emptyPieces = 0;
+        for(int i = startRow; i < startRow + Evaluation.WINDOW_SIZE; i++){
+            if(board[i][startColumn--] == State.COMPUTER_TURN)
+                compPieces++;
+            else if(board[i][startColumn--] == State.PLAYER_TURN)
+                oppPieces++;
+            else
+                emptyPieces++;
+        }
+        return calculateWeights(compPieces, oppPieces, emptyPieces);
     }
 
-    private static int calculateWeights(int pieces, int oppPiece, int empty){
+    private static int calculateWeights(int compPieces, int oppPiece, int empty){
 
         return 0;
     }
