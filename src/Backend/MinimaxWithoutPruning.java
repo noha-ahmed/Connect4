@@ -4,7 +4,8 @@ public class MinimaxWithoutPruning implements IMinimax{
 
     public static EvaluationState Maximize(State state, int level){
         if(level==0){
-            state.getEvaluationState().setEvaluationValue(0);
+            int eval = state.evaluateState();
+            state.getEvaluationState().setEvaluationValue(eval);
             return state.getEvaluationState();
         }
         for(int i=0; i<7; i++){
@@ -22,7 +23,8 @@ public class MinimaxWithoutPruning implements IMinimax{
 
     public static EvaluationState Minimize(State state, int level){
         if(level==0){
-            state.getEvaluationState().setEvaluationValue(0);
+            int eval = state.evaluateState();
+            state.getEvaluationState().setEvaluationValue(eval);
             return state.getEvaluationState();
         }
         for(int i=0; i<7; i++){
