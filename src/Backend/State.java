@@ -29,13 +29,13 @@ public class State implements Cloneable{
         return colNum;
     }
 
-    public State getChild(int columnNum){
+    public State getChild(int columnNum , int player){
         State newState = null;
         if(this.freeCells[columnNum] == 6)
             return newState;
         try {
             newState = this.clone();
-            newState.board[freeCells[columnNum]][columnNum] = this.COMPUTER_TURN;
+            newState.board[freeCells[columnNum]][columnNum] = player;
             newState.freeCells[columnNum] += 1;
             newState.evaluationState.setFromColumn(columnNum);
         } catch (CloneNotSupportedException e) {

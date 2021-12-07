@@ -20,11 +20,12 @@ public class ComputerAgent implements IComputerAgent {
 
     public int getNextMove(int playerMove){
         currentState.updateState(playerMove, State.PLAYER_TURN);
-        turns+=2;
+        turns++;
         level = Math.min(level , maxTurns - turns);
         currentState.setEvaluationState(new EvaluationState());
         EvaluationState move = minimax.Decision(currentState, level);
         currentState.updateState(move.getFromColumn(), State.COMPUTER_TURN);
+        turns++;
         return move.getFromColumn();
     }
 

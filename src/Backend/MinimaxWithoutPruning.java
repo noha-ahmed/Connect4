@@ -9,7 +9,7 @@ public class MinimaxWithoutPruning implements IMinimax{
             return state.getEvaluationState();
         }
         for(int i=0; i<7; i++){
-            State child = state.getChild(i);
+            State child = state.getChild(i , State.COMPUTER_TURN);
             if(child!=null){
                 child.getEvaluationState().setEvaluationValue(Minimize(child,level-1).getEvaluationValue());
                 state.getEvaluationState().addChild(child.getEvaluationState());
@@ -28,7 +28,7 @@ public class MinimaxWithoutPruning implements IMinimax{
             return state.getEvaluationState();
         }
         for(int i=0; i<7; i++){
-            State child = state.getChild(i);
+            State child = state.getChild(i , State.PLAYER_TURN);
             if(child!=null){
                 child.getEvaluationState().setEvaluationValue(Maximize(child,level-1).getEvaluationValue());
                 state.getEvaluationState().addChild(child.getEvaluationState());
