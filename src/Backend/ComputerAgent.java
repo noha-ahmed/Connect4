@@ -11,23 +11,32 @@ public class ComputerAgent {
     function maximize
      */
     IMinimax minimax;
-    int depth;
+    int level;
     int turns;
-    int maxTurns = 6*7;
+    int maxTurns = State.ROW_COUNT * State.COLUMNS_COUNT;
+    State currentState;
 
     public ComputerAgent(boolean withPruning ,int k){
-        depth = Math.min(k , maxTurns);
+        currentState = new State();
+        level = Math.min(k , maxTurns);
         if( withPruning )
-            minimax = null;
+            minimax = new MinimaxPruning();
         else
             minimax = new MinimaxWithoutPruning();
     }
 
     public int getNextMove(int playerMove){
+        currentState.updateState(playerMove, State.PLAYER_TURN);
         turns+=2;
-        depth = Math.min(depth , maxTurns - turns);
+        level = Math.min(level , maxTurns - turns);
+        EvaluationState move = minimax.Decision(currentState, level);
+        currentState.updateState(move.getFromColumn(), State.COMPUTER_TURN);
+        return move.getFromColumn();
+    }
 
-        return 0;
+    public int getFirstMove(){
+        currentState.updateState(State.COLUMNS_COUNT / 2, State.COMPUTER_TURN);
+        return State.COLUMNS_COUNT / 2;
     }
     
 

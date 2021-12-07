@@ -1,11 +1,11 @@
 package Backend;
 
 public class State implements Cloneable{
-    private static final int EMPTY = 0;
-    private static final int COMPUTER_TURN = 1;
-    public static final int PLAYER_TURN = 2;
-    private static final int ROW_COUNT = 6;
-    private static final int COLUMNS_COUNT = 7;
+    protected static final int EMPTY = 0;
+    protected static final int COMPUTER_TURN = 1;
+    protected static final int PLAYER_TURN = 2;
+    protected static final int ROW_COUNT = 6;
+    protected static final int COLUMNS_COUNT = 7;
 
     private static int[][] board;
     private int[] freeCells;
@@ -44,24 +44,10 @@ public class State implements Cloneable{
         return newState;
     }
 
-    public void updateState(int columnNum){
-        this.board[freeCells[columnNum]][columnNum] = this.COMPUTER_TURN;
+    public void updateState(int columnNum, int player){
+        this.board[freeCells[columnNum]][columnNum] = player;
         freeCells[columnNum] ++;
     }
-
-    /*
-    value evaluatedValue
-    function getInitialState
-    function getChildrenStates
-    int[] firstFreeCell
-    function evaluateState
-    function findSpecifiedColumn
-
-    heuristic should :
-    2 priorities:
-    check if player will win and stop this move
-    check if there is w inning move for computer
-     */
     public State clone() throws CloneNotSupportedException{
         State newState = new State();
         newState.freeCells = this.freeCells.clone();
