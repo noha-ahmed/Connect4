@@ -1,15 +1,6 @@
 package Backend;
 
 public class ComputerAgent {
-    /*
-
-    thinker
-    turnsCount
-
-    getNextMove
-    function minimize
-    function maximize
-     */
     IMinimax minimax;
     int level;
     int turns = 0;
@@ -44,6 +35,11 @@ public class ComputerAgent {
     public EvaluationState getEvaluationState(){
         return this.currentState.getEvaluationState();
     }
+}
 
-
+class Main{
+    public static void main(String[] args){
+        //ComputerAgent game = new ComputerAgent();
+        //while()
+    }
 }

@@ -10,7 +10,7 @@ public class MinimaxPruning implements IMinimax{
     private EvaluationState maximize(State state, int level, int alpha, int beta){
         if(level == 0){
             // get evaluation value of leaf
-            int evaluation = 0;
+            int evaluation = state.evaluateState();
             state.getEvaluationState().setEvaluationValue(evaluation);
             return state.getEvaluationState();
         }

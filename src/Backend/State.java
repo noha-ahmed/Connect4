@@ -55,6 +55,10 @@ public class State implements Cloneable{
         newState.evaluationState = new EvaluationState();
         return newState;
     }
+    public int evaluateState(){
+        return Evaluation.evaluateScore(this.board);
+    }
+
     public int[] getFreeCells() {
         return this.freeCells;
     }
