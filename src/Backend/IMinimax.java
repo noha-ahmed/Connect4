@@ -1,5 +1,5 @@
 package Backend;
 
 public interface IMinimax {
-    State Decision(State initial, int level);
+    EvaluationState Decision(State initial, int k);
 }

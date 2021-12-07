@@ -26,6 +26,7 @@ public class ComputerAgent {
     public int getNextMove(int playerMove){
         turns+=2;
         depth = Math.min(depth , maxTurns - turns);
+
         return 0;
     }
     
