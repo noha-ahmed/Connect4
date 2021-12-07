@@ -34,6 +34,27 @@ public class MinimaxPruning implements IMinimax{
     }
 
     private EvaluationState minimize(State state, int level, int alpha, int beta){
-        return null;
+        if( level == 0 ){
+            int evaluation = 0;
+            state.getEvaluationState().setEvaluationValue(evaluation);
+            return state.getEvaluationState();
+        }
+        EvaluationState minChild = new EvaluationState();
+        minChild.setEvaluationValue(Integer.MAX_VALUE);
+        for( int i = 0 ; i < 7 ; i++ ){
+            State child = state.getChild(i);
+            if( child != null ){
+                int evalValue = maximize(child, level -1 , alpha, beta).getEvaluationValue();
+                child.getEvaluationState().setEvaluationValue(evalValue);
+                if( evalValue < minChild.getEvaluationValue() ){
+                    minChild = child.getEvaluationState();
+                }
+                if(minChild.getEvaluationValue() <= alpha)
+                    break;
+                if(minChild.getEvaluationValue() < beta)
+                    alpha = minChild.getEvaluationValue();
+            }
+        }
+        return minChild;
     }
 }
