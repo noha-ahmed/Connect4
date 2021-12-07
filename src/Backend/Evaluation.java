@@ -32,7 +32,7 @@ public class Evaluation {
         int oppPiece = 0;
         int piece = 0;
         int empty = 0;
-        for(int i=startColumn; i<4+startColumn; i++){
+        for(int i=startColumn; i<startColumn+WINDOW_SIZE; i++){
             if(board[startRow][i]==State.PLAYER_TURN){
                 oppPiece--;
             }else if(board[startRow][i]==State.COMPUTER_TURN){
