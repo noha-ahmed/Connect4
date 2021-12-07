@@ -1,10 +1,9 @@
 package Backend;
 
 public class Evaluation {
-    private static int quadrupleScore = 100;
-    private static int tripleScore = 50;
-    private static int doubleScore = 25;
-
+    private static final int QUADRUPLE_SCORE = 100;
+    private static final int TRIPLE_SCORE = 50;
+    private static final int DOUBLE_SCORE = 25;
     public static int evaluateScore(int[][] board){
         int evalScore = 0;
 
@@ -45,6 +44,7 @@ public class Evaluation {
     }
 
     private static int evalVerticalWindow(int[][] board, int startRow, int startColumn){
+        int compPieces = 0;
         return 0;
     }
 
@@ -57,20 +57,7 @@ public class Evaluation {
     }
 
     private static int calculateWeights(int pieces, int oppPiece, int empty){
-        if(pieces==4){
-            return quadrupleScore;
-        }else if(pieces==3 && empty==1){
-            return tripleScore;
-        }else if(pieces==2 && empty==2){
-            return doubleScore;
-        }
-        if(oppPiece==-4){
-            return -1*quadrupleScore;
-        }else if(oppPiece==-3 && empty==1){
-            return -1*tripleScore;
-        }else if(oppPiece==-2 && empty==2){
-            return -1*doubleScore;
-        }
+
         return 0;
     }
 
