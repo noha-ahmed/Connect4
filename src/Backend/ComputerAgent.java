@@ -40,7 +40,10 @@ public class ComputerAgent {
         currentState.updateState(State.COLUMNS_COUNT / 2, State.COMPUTER_TURN);
         return State.COLUMNS_COUNT / 2;
     }
-    
+
+    public EvaluationState getEvaluationState(){
+        return this.currentState.getEvaluationState();
+    }
 
 
 }
