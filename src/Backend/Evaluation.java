@@ -89,8 +89,21 @@ public class Evaluation {
         return calculateWeights(compPieces, oppPieces, emptyPieces);
     }
 
-    private static int calculateWeights(int compPieces, int oppPiece, int empty){
-
+    private static int calculateWeights(int pieces, int oppPiece, int empty){
+        if(pieces==4){
+            return QUADRUPLE_SCORE;
+        }else if(pieces==3 && empty==1){
+            return TRIPLE_SCORE;
+        }else if(pieces==2 && empty==2){
+            return DOUBLE_SCORE;
+        }
+        if(oppPiece==-4){
+            return -1*QUADRUPLE_SCORE;
+        }else if(oppPiece==-3 && empty==1){
+            return -1*TRIPLE_SCORE;
+        }else if(oppPiece==-2 && empty==2){
+            return -1*DOUBLE_SCORE;
+        }
         return 0;
     }
 
