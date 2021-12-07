@@ -2,8 +2,8 @@ package Backend;
 
 public class Evaluation {
     private static final int QUADRUPLE_SCORE = 100;
-    private static final int TRIPLE_SCORE = 50;
-    private static final int DOUBLE_SCORE = 25;
+    private static final int TRIPLE_SCORE = 5;
+    private static final int DOUBLE_SCORE = 2;
     private static final int WINDOW_SIZE = 4;
     public static int evaluateScore(int[][] board){
         int evalScore = 0;
@@ -23,7 +23,7 @@ public class Evaluation {
                 //Positive diagonal groups check "/""
                 evalScore += evalPDiagonalWindow(board, i, j);
                 //Negative diagonal groups check "\"
-                evalScore += evalNDiagonalWindow(board, i, State.COLUMNS_COUNT - j);
+                evalScore += evalNDiagonalWindow(board, i, State.COLUMNS_COUNT - j - 1);
             }
         
         return evalScore;
@@ -64,12 +64,13 @@ public class Evaluation {
         int oppPieces = 0;
         int emptyPieces = 0;
         for(int i = startRow; i < startRow + Evaluation.WINDOW_SIZE; i++){
-            if(board[i][startColumn++] == State.COMPUTER_TURN)
+            if(board[i][startColumn] == State.COMPUTER_TURN)
                 compPieces++;
-            else if(board[i][startColumn++] == State.PLAYER_TURN)
+            else if(board[i][startColumn] == State.PLAYER_TURN)
                 oppPieces++;
             else
                 emptyPieces++;
+            startColumn++;
         }
         return calculateWeights(compPieces, oppPieces, emptyPieces);
     }
@@ -79,12 +80,13 @@ public class Evaluation {
         int oppPieces = 0;
         int emptyPieces = 0;
         for(int i = startRow; i < startRow + Evaluation.WINDOW_SIZE; i++){
-            if(board[i][startColumn--] == State.COMPUTER_TURN)
+            if(board[i][startColumn] == State.COMPUTER_TURN)
                 compPieces++;
-            else if(board[i][startColumn--] == State.PLAYER_TURN)
+            else if(board[i][startColumn] == State.PLAYER_TURN)
                 oppPieces++;
             else
                 emptyPieces++;
+            startColumn --;
         }
         return calculateWeights(compPieces, oppPieces, emptyPieces);
     }
@@ -100,7 +102,7 @@ public class Evaluation {
         if(oppPiece==4){
             return -1*QUADRUPLE_SCORE;
         }else if(oppPiece==3 && empty==1){
-            return -1*TRIPLE_SCORE;
+            return -1*60;
         }else if(oppPiece==2 && empty==2){
             return -1*DOUBLE_SCORE;
         }
