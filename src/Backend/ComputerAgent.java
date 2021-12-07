@@ -1,5 +1,7 @@
 package Backend;
 
+import java.util.Scanner;
+
 public class ComputerAgent {
     IMinimax minimax;
     int level;
@@ -37,9 +39,15 @@ public class ComputerAgent {
     }
 }
 
-class Main{
+class Main2{
     public static void main(String[] args){
-        //ComputerAgent game = new ComputerAgent();
-        //while()
+        ComputerAgent game = new ComputerAgent(true, 10);
+        Scanner sc = new Scanner(System.in);
+        while(game.turns < game.maxTurns){
+            System.out.println("enter player move: ");
+            int oppMove = sc.nextInt();
+            int compMove = game.getNextMove(oppMove);
+            System.out.println("computer move at: " + compMove);
+        }
     }
 }

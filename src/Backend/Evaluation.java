@@ -34,7 +34,7 @@ public class Evaluation {
         int empty = 0;
         for(int i=startColumn; i<startColumn+WINDOW_SIZE; i++){
             if(board[startRow][i]==State.PLAYER_TURN){
-                oppPiece--;
+                oppPiece++;
             }else if(board[startRow][i]==State.COMPUTER_TURN){
                 piece++;
             }else{
@@ -97,11 +97,11 @@ public class Evaluation {
         }else if(pieces==2 && empty==2){
             return DOUBLE_SCORE;
         }
-        if(oppPiece==-4){
+        if(oppPiece==4){
             return -1*QUADRUPLE_SCORE;
-        }else if(oppPiece==-3 && empty==1){
+        }else if(oppPiece==3 && empty==1){
             return -1*TRIPLE_SCORE;
-        }else if(oppPiece==-2 && empty==2){
+        }else if(oppPiece==2 && empty==2){
             return -1*DOUBLE_SCORE;
         }
         return 0;
