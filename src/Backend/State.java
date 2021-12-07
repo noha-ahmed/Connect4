@@ -51,7 +51,10 @@ public class State implements Cloneable{
     public State clone() throws CloneNotSupportedException{
         State newState = new State();
         newState.freeCells = this.freeCells.clone();
-        newState.board = this.board.clone();
+        newState.board = new int[this.ROW_COUNT][];
+        for(int i = 0; i < this.ROW_COUNT; i++){
+            newState.board[i] = this.board[i].clone();
+        }
         newState.evaluationState = new EvaluationState();
         return newState;
     }
