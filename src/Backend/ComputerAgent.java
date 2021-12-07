@@ -12,7 +12,7 @@ public class ComputerAgent {
      */
     IMinimax minimax;
     int level;
-    int turns;
+    int turns = 0;
     int maxTurns = State.ROW_COUNT * State.COLUMNS_COUNT;
     State currentState;
 
@@ -29,12 +29,14 @@ public class ComputerAgent {
         currentState.updateState(playerMove, State.PLAYER_TURN);
         turns+=2;
         level = Math.min(level , maxTurns - turns);
+        currentState.setEvaluationState(new EvaluationState());
         EvaluationState move = minimax.Decision(currentState, level);
         currentState.updateState(move.getFromColumn(), State.COMPUTER_TURN);
         return move.getFromColumn();
     }
 
     public int getFirstMove(){
+        turns++;
         currentState.updateState(State.COLUMNS_COUNT / 2, State.COMPUTER_TURN);
         return State.COLUMNS_COUNT / 2;
     }
