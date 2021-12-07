@@ -10,6 +10,7 @@ public class MinimaxWithoutPruning implements IMinimax{
         for(int i=0; i<7; i++){
             State child = state.getChild(i);
             child.setEvaluationState(Minimize(child,k-1));
+            state.getEvaluationState().addChild(child.getEvaluationState());
             if(child.getEvaluationState().getEvaluationValue()>state.getEvaluationState().getEvaluationValue()){
                 state.getEvaluationState().setEvaluationValue(child.getEvaluationState().getEvaluationValue());
             }
@@ -25,6 +26,7 @@ public class MinimaxWithoutPruning implements IMinimax{
         for(int i=0; i<7; i++){
             State child = state.getChild(i);
             child.setEvaluationState(Maximize(child,k-1));
+            state.getEvaluationState().addChild(child.getEvaluationState());
             if(child.getEvaluationState().getEvaluationValue()<state.getEvaluationState().getEvaluationValue()){
                 state.getEvaluationState().setEvaluationValue(child.getEvaluationState().getEvaluationValue());
             }
@@ -34,7 +36,6 @@ public class MinimaxWithoutPruning implements IMinimax{
 
     @Override
     public EvaluationState Decision(State initial, int k) {
-        initial.setEvaluationState(new EvaluationState());
         return Maximize(initial,k);
     }
 }

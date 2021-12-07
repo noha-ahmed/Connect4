@@ -7,6 +7,10 @@ public class EvaluationState {
     private int fromColumn;
     private ArrayList<EvaluationState> children;
 
+    public EvaluationState(){
+        this.children = new ArrayList<>();
+    }
+
     public int getEvaluationValue() {
         return evaluationValue;
     }
@@ -30,4 +34,6 @@ public class EvaluationState {
     public void setChildren(ArrayList<EvaluationState> children) {
         this.children = children;
     }
+
+    public void addChild(EvaluationState child){this.children.add(child);}
 }
