@@ -1,11 +1,16 @@
 package Frontend;
 
 import javafx.animation.TranslateTransition;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.input.MouseEvent;
@@ -17,6 +22,7 @@ import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,30 +39,52 @@ public class Controller implements Initializable {
     public GameHelper gameHelper;
     //used components
     private Disc[][] grid = new Disc[COLUMNS][ROWS];
+    public String player="";
+    public String strategy="";
     @FXML
-    public Button buttonPlayerStart ;
-    @FXML
-    public Button buttonComputerStart ;
+    public Button restart ;
     @FXML
     public Pane discRoot = new Pane();
     @FXML
-    public Pane connect4Pane = new Pane();
+    public Pane connect4Pane =  new Pane();
     public static Text textWinnerMessage = new Text();
-
+    List<Rectangle> rectangles=new ArrayList<>();
+    List<Circle> circles=new ArrayList<>();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        disablePane();
         gameHelper=new GameHelper();
         gameHelper.setController(this);
         connect4Pane.getChildren().add(discRoot);
         Shape gridShape = makeGrid();
         connect4Pane.getChildren().add(gridShape);
-        connect4Pane.getChildren().addAll(makeColumns());
+        rectangles=makeRec();
+        circles= makeCircles();
+        connect4Pane.getChildren().addAll(makeCircles());
+        connect4Pane.getChildren().addAll(makeRec());
+
+    }
+    public void setSettings(String p,String s){
+        player=p;
+        strategy=s;
+        start();
+    }
+    public void start() {
+       // homePage home=new homePage();
+        initializeGame();
+        System.out.println("hell "+ player);
+        if (player.equals("Computer") ) {
+                placeDisc(new Disc(false), AIConnect4.getAIMove(), false);
+            }
+
     }
     public void handle(ActionEvent event) {
+
         initializeGame();
-        if(event.getSource()==buttonComputerStart){
-        placeDisc(new Disc(false), AIConnect4.getAIMove(),false);
+        if (player.equals("Computer") ) {
+            placeDisc(new Disc(false), AIConnect4.getAIMove(), false);
         }
+
     }
     public static class Disc extends Circle {
         private final boolean color;
@@ -84,11 +112,13 @@ public class Controller implements Initializable {
     }
 
     private void initializeGame() {
-        buttonComputerStart.setVisible(false);
-        buttonPlayerStart.setVisible(false);
+        disablePane();
         textWinnerMessage.setVisible(false);
+        restart.setVisible(true);
+        restart.setDisable(false);
         grid = new Disc[COLUMNS][ROWS];
-//        discRoot.getChildren().clear();
+        discRoot.getChildren().clear();
+        //initialize board in backend
         AIConnect4.initialize_board();
         enablePane();
     }
@@ -108,8 +138,8 @@ public class Controller implements Initializable {
         }
 
         Light.Distant light = new Light.Distant();
-        light.setAzimuth(30.0);
-        light.setElevation(30.0);
+        light.setAzimuth(45.0);
+        light.setElevation(40.0);
         Lighting lighting = new Lighting();
         lighting.setLight(light);
         lighting.setSurfaceScale(5.0);
@@ -119,18 +149,54 @@ public class Controller implements Initializable {
         return shape;
     }
 
-    private List<Rectangle> makeColumns() {
-        List<Rectangle> list = new ArrayList<>();
-
+    private List<Circle> makeCircles() {
+        List<Circle> list = new ArrayList<>();
         for (int x = 0; x < COLUMNS; x++) {
-            Rectangle rect = new Rectangle(TILE_SIZE, (ROWS + 1) * TILE_SIZE);
+            final Circle disk = new Circle(TILE_SIZE/2);
+            disk.fillProperty().bind(new SimpleObjectProperty<Color>(Color.TRANSPARENT));
+            disk.setOpacity(10);
+            disk.setTranslateX(x * (TILE_SIZE + 5) + (TILE_SIZE/2)+20 );
+            disk.setTranslateY(0);
+            final int column = x;
+
+            disk.setOnMouseEntered(new EventHandler<MouseEvent>(){
+                @Override
+                public void handle(MouseEvent arg0) {
+                    disk.fillProperty().bind(new SimpleObjectProperty<Color>(Color.RED));
+                }
+            });
+
+            disk.setOnMouseExited(new EventHandler<MouseEvent>(){
+                @Override
+                public void handle(MouseEvent arg0) {
+                    disk.fillProperty().bind(new SimpleObjectProperty<Color>(Color.TRANSPARENT));
+                }
+            });
+
+            disk.setOnMouseClicked(new EventHandler<MouseEvent>(){
+                @Override
+                public void handle(MouseEvent arg0) {
+                    placeDisc(new Disc(true), column,true);
+//                    //update the board at the backend
+                  AIConnect4.update_board(column, PLAYER);
+                }
+            });
+            list.add(disk);
+        }
+        return list;
+    }
+    private List<Rectangle> makeRec() {
+        List<Rectangle> list = new ArrayList<>();
+        for (int x = 0; x < COLUMNS; x++) {
+            Rectangle rect = new Rectangle(TILE_SIZE, (ROWS +0.5) * TILE_SIZE);
             rect.setTranslateX(x * (TILE_SIZE + 5) + TILE_SIZE / 4);
             rect.setFill(Color.TRANSPARENT);
 
-            rect.setOnMouseEntered(e -> rect.setFill(Color.rgb(200, 200, 50, 0.3)));
-            rect.setOnMouseExited(e -> rect.setFill(Color.TRANSPARENT));
-
             final int column = x;
+            rect.setOnMouseEntered(e -> rect.setFill(Color.rgb(200, 200, 50, 0.3
+            )));
+          rect.setOnMouseExited(e -> rect.setFill(Color.TRANSPARENT));
+
             rect.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
@@ -142,9 +208,80 @@ public class Controller implements Initializable {
 
             list.add(rect);
         }
-
         return list;
     }
+
+    private void makeColumns() {
+        List<Rectangle> listR = new ArrayList<>();
+        List<Circle> listC = new ArrayList<>();
+
+        for (int x = 0; x < COLUMNS; x++) {
+            Rectangle rect = new Rectangle(TILE_SIZE, (ROWS +0.5) * TILE_SIZE);
+            rect.setTranslateX(x * (TILE_SIZE + 5) + TILE_SIZE / 4);
+            rect.setFill(Color.TRANSPARENT);
+            final Circle disk = new Circle(TILE_SIZE/2);
+            disk.fillProperty().bind(new SimpleObjectProperty<Color>(Color.TRANSPARENT));
+            disk.setOpacity(10);
+            disk.setTranslateX(x * (TILE_SIZE + 5) + (TILE_SIZE/2)+20 );
+            disk.setTranslateY(0);
+            final int column = x;
+         //   rect.setOnMouseEntered(e -> rect.setFill(Color.rgb(200, 200, 50, 0.3)));
+            rect.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    rect.setFill(Color.rgb(200, 200, 50, 0.3));
+                    disk.fillProperty().bind(new SimpleObjectProperty<Color>(Color.RED));
+                }
+            });
+            rect.setOnMouseExited(e -> rect.setFill(Color.TRANSPARENT));
+
+            rect.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    placeDisc(new Disc(true), column,true);
+                    //update the board at the backend
+                    AIConnect4.update_board(column, PLAYER);
+                }
+            });
+
+            listR.add(rect);
+            listC.add(disk);
+
+        }
+        List<Circle> list = new ArrayList<>();
+        for (int x = 0; x < COLUMNS; x++) {
+            final Circle disk = new Circle(TILE_SIZE/2);
+            disk.fillProperty().bind(new SimpleObjectProperty<Color>(Color.TRANSPARENT));
+            disk.setOpacity(10);
+            disk.setTranslateX(x * (TILE_SIZE + 5) + (TILE_SIZE/2)+20 );
+            disk.setTranslateY(0);
+            final int column = x;
+
+            disk.setOnMouseEntered(new EventHandler<MouseEvent>(){
+                @Override
+                public void handle(MouseEvent arg0) {
+                    disk.fillProperty().bind(new SimpleObjectProperty<Color>(Color.RED));
+                }
+            });
+
+            disk.setOnMouseExited(new EventHandler<MouseEvent>(){
+                @Override
+                public void handle(MouseEvent arg0) {
+                    disk.fillProperty().bind(new SimpleObjectProperty<Color>(Color.TRANSPARENT));
+                }
+            });
+
+            disk.setOnMouseClicked(new EventHandler<MouseEvent>(){
+                @Override
+                public void handle(MouseEvent arg0) {
+                    placeDisc(new Disc(true), column,true);
+//                    //update the board at the backend
+                    AIConnect4.update_board(column, PLAYER);
+                }
+            });
+        }
+    }
+
 
     private void placeDisc(Disc disc, int column,boolean playerTurn) {
         disablePane();
@@ -195,6 +332,14 @@ public class Controller implements Initializable {
         return Optional.ofNullable(grid[column][row]);
     }
 
-
+    public void home(ActionEvent event) {
+        Main Scene=new Main();
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("home.fxml"));
+            Scene.setScene(event, root,"Connect4");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
