@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.input.MouseEvent;
@@ -49,6 +50,10 @@ public class Controller implements Initializable {
     public Button restart;
     @FXML
     public Pane discRoot = new Pane();
+    @FXML
+    public Label playerScore;
+    @FXML
+    public Label computerScore;
     @FXML
     public Pane connect4Pane = new Pane();
     public static Text textWinnerMessage = new Text();
@@ -319,7 +324,8 @@ public class Controller implements Initializable {
 
                 // if the player played then this is the computer move
                 placeDisc(new Disc(false), computerAgent.getNextMove(column), false);
-                //showTree();
+                playerScore.setText("" + computerAgent.getPlayerScore());
+                computerScore.setText("" + computerAgent.getComputerScore());
                 // next turn is player
 
             }
@@ -329,7 +335,7 @@ public class Controller implements Initializable {
 
     }
 
-    public void showTree() {
+    public void showTree(ActionEvent event) {
         Parent root;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("showTree.fxml"));

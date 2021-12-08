@@ -12,7 +12,7 @@ public class MinShape implements Shape {
     private int id;
     private int parentId;
     private int value = 0;
-    private int halfSideLength = 20;
+    private int radius = 20;
   
     public MinShape(int parentId, int id, int value) {
         this.parentId = parentId;
@@ -58,18 +58,12 @@ public class MinShape implements Shape {
 
     @Override
     public void draw(GraphicsContext ctx) {
-        ctx.beginPath();
-        ctx.moveTo(x_axis - halfSideLength, y_axis);
-        ctx.lineTo(x_axis + halfSideLength, y_axis);
-        ctx.lineTo(x_axis, y_axis + halfSideLength*2);
-        ctx.lineTo(x_axis -halfSideLength, y_axis);
-        ctx.closePath();
-        ctx.setStroke(Color.RED.brighter().brighter().brighter());
-        ctx.fill();
-        ctx.stroke();
-        ctx.setFill(Color.WHITE);
-        ctx.fillText("" + this.value, this.x_axis - 2, this.y_axis + halfSideLength );
-
+        ctx.setStroke(Color.RED.brighter().brighter());
+        ctx.setFill(Color.RED.brighter().brighter().brighter().brighter().brighter());
+        ctx.strokeOval(this.x_axis - this.radius , this.y_axis , this.radius*2 , this.radius*2);
+        ctx.fillOval(this.x_axis - this.radius , this.y_axis, this.radius*2 , this.radius*2 );
+        ctx.setFill(Color.BLACK);
+        ctx.fillText("" + this.value , this.x_axis - 2, this.y_axis + 25);
     }
 
 

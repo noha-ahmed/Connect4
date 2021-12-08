@@ -10,6 +10,7 @@ public class MaxShape implements Shape {
     private double y_axis;
     private int id;
     private int parentId;
+    private int length = 40;
     private int value = 0;
   
     public MaxShape(int parentId, int id, int value) {
@@ -55,11 +56,11 @@ public class MaxShape implements Shape {
     @Override
     public void draw(GraphicsContext ctx) {
         ctx.setFill(Color.YELLOW.darker());
-        ctx.setStroke(Color.YELLOW.darker().darker().darker());
-        ctx.fillRect(this.x_axis - 40, this.y_axis + 20, 80, 40);
+        ctx.setStroke(Color.YELLOW.darker().darker());
+        ctx.fillRect(this.x_axis - this.length/2, this.y_axis, this.length , this.length );
         ctx.stroke();
-        ctx.setFill(Color.WHITE.brighter().brighter().brighter().brighter());
-        ctx.fillText( ""+ this.value, this.x_axis - 2 , this.y_axis + 45);
+        ctx.setFill(Color.BLACK);
+        ctx.fillText( ""+ this.value, this.x_axis - 2 , this.y_axis + 25);
 
     }
 

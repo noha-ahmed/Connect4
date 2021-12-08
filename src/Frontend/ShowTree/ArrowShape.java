@@ -14,26 +14,18 @@ public class ArrowShape implements Shape {
     public ArrowShape(int id ,int value,Shape shape1, Shape shape2 ) {
         this.value = value;
         this.id =id;
-        if (shape1.getShapeKind().equals("circle")) {
+      
             this.x1 = shape1.getX_axis();
-            this.y1 = shape1.getY_axis()+60;
+            this.y1 = shape1.getY_axis()+40;
             this.x2 = shape2.getX_axis();
-            this.y2 = shape2.getY_axis()+20;
-        } else if (shape1.getShapeKind().equals("rectangle")) {
-            this.x2 = shape2.getX_axis();
-            this.y2 = shape2.getY_axis()+20;
-            this.x1 = shape1.getX_axis();
-            this.y1 = shape1.getY_axis()+60;
-        }
+            this.y2 = shape2.getY_axis();
+       
         
     } 
     
 
     @Override
     public void draw(GraphicsContext ctx) { 
-        ctx.setStroke(Color.BLACK);
-        ctx.stroke();
-        ctx.setFill(Color.BLACK);
         ctx.beginPath();
         ctx.moveTo(x1, y1);
         ctx.lineTo(x2, y2 - 5);

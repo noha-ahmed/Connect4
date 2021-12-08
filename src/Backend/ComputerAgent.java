@@ -45,6 +45,18 @@ public class ComputerAgent implements IComputerAgent {
         // TODO Auto-generated method stub
         
     }
+
+    @Override
+    public int getComputerScore() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public int getPlayerScore() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 }
 
 class Main2{

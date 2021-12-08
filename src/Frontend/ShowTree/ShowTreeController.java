@@ -47,8 +47,8 @@ public class ShowTreeController implements Initializable{
     private static final int Limit = 7;
     private EvaluationState rootState;
     private int shapeWidth = 80;
-    private int spaceWidth = 30;
-    private int levelDifference = 100;
+    private int spaceWidth = 10;
+    private int levelDifference = 60;
     private double middleX;
     private int globalId = 0;
 
