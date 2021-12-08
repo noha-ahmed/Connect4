@@ -297,21 +297,18 @@ public class Controller implements Initializable {
         }
     }
 
-    private void placeDisc(Disc disc, int column, boolean playerTurn) {
-        if( getDisc(column, 0).isPresent() ) 
-            return;
+    private void placeDisc(Disc disc, int column, boolean playerTurn) {  
         disablePane();
-       
         int row = ROWS - 1;
         while (row >= 0) {
             if (!getDisc(column, row).isPresent())
                 break;
             row--;
         } 
-
-        if (row < 0)
+        if (row < 0){
+            enablePane();
             return;
-
+        }
         grid[column][row] = disc;
         discRoot.getChildren().add(disc);
         disc.setTranslateX(column * (TILE_SIZE + 5) + TILE_SIZE / 4);
@@ -339,7 +336,7 @@ public class Controller implements Initializable {
     public void showTree(ActionEvent event) {
         Parent root;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("showTree.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ShowTree/showTree.fxml"));
             root = loader.load();
             ShowTreeController c = loader.getController();
             Scene scene = new Scene(root);

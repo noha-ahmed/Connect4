@@ -1,4 +1,4 @@
-package Frontend.ShowTree;
+package Frontend.ShowTree.Shapes;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -7,14 +7,10 @@ public class ArrowShape implements Shape {
     private double y1 = 0;
     private double x2 = 0;
     private double y2 = 0;
-    private String kind = "arrow";
-    private int id;
     private int value;
 
-    public ArrowShape(int id ,int value,Shape shape1, Shape shape2 ) {
-        this.value = value;
-        this.id =id;
-      
+    public ArrowShape(int value,MinMaxShape shape1, MinMaxShape shape2 ) {
+        this.value = value+1;
             this.x1 = shape1.getX_axis();
             this.y1 = shape1.getY_axis()+40;
             this.x2 = shape2.getX_axis();
@@ -23,12 +19,15 @@ public class ArrowShape implements Shape {
         
     } 
     
-
     @Override
     public void draw(GraphicsContext ctx) { 
         ctx.beginPath();
         ctx.moveTo(x1, y1);
         ctx.lineTo(x2, y2 - 5);
+        double midX = (x1+x2)/2;
+        double midY = (y1+y2)/2;
+        ctx.setFill(Color.BLACK.darker().darker().darker());
+        ctx.fillText("" + this.value , midX- 8, midY);
         ctx.setStroke(Color.BLACK);
         ctx.stroke();
         ctx.setFill(Color.BLACK);
@@ -43,45 +42,4 @@ public class ArrowShape implements Shape {
         ctx.stroke();
     }
 
-
-
-    public String getShapeKind() {
-        return "arrow";
-    }
-
-
-
-    @Override
-    public int getId() {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-
-    @Override
-    public void setCoordinates(double x, double y) {
-        // TODO Auto-generated method stub
-        
-    }
-
-
-    @Override
-    public int getParentId() {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-
-    @Override
-    public double getY_axis() {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
-
-    @Override
-    public double getX_axis() {
-        // TODO Auto-generated method stub
-        return 0;
-    }
 }

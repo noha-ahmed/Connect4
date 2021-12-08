@@ -33,12 +33,12 @@
       </Button>
       <Pane layoutX="688.0" layoutY="163.0" prefHeight="145.0" prefWidth="216.0" style="-fx-border-color: black;">
          <children>
-            <Label fx:id="playerScore" layoutX="21.0" layoutY="50.0" prefHeight="69.0" prefWidth="80.0" style="-fx-border-color: red;" text="     0" textFill="#321515">
+            <Label fx:id="playerScore" alignment="CENTER" layoutX="21.0" layoutY="50.0" prefHeight="69.0" prefWidth="80.0" style="-fx-border-color: red;" text="0" textAlignment="CENTER" textFill="#321515">
                <font>
                   <Font name="Comic Sans MS Italic" size="21.0" />
                </font>
             </Label>
-            <Label fx:id="computerScore" layoutX="119.0" layoutY="50.0" prefHeight="69.0" prefWidth="80.0" style="-fx-border-color: yellow;" text="     0" textFill="#28260d">
+            <Label fx:id="computerScore" alignment="CENTER" layoutX="119.0" layoutY="50.0" prefHeight="69.0" prefWidth="80.0" style="-fx-border-color: yellow;" text="0" textFill="#28260d">
                <font>
                   <Font name="Comic Sans MS Italic" size="21.0" />
                </font>
