@@ -42,20 +42,23 @@ public class EvaluationState {
 
     public String toString() {
         StringBuilder buffer = new StringBuilder(50);
-        print(buffer, "", "");
+        print(buffer, "", "" , 1);
         return buffer.toString();
     }
+    public void printTree(){
+        System.out.println(this.toString());
+    }
 
-    private void print(StringBuilder buffer, String prefix, String childrenPrefix) {
+    private void print(StringBuilder buffer, String prefix, String childrenPrefix , int level) {
         buffer.append(prefix);
-        buffer.append(Integer.toString(this.evaluationValue));
+        buffer.append("(L" + level + ") Move : " + (this.fromColumn + 1) + ", Value : " + this.evaluationValue );
         buffer.append('\n');
         for (Iterator<EvaluationState> it = children.iterator(); it.hasNext();) {
             EvaluationState next = it.next();
             if (it.hasNext()) {
-                next.print(buffer, childrenPrefix + "├── ", childrenPrefix + "│   ");
+                next.print(buffer, childrenPrefix + "├── ", childrenPrefix + "│   " , level + 1);
             } else {
-                next.print(buffer, childrenPrefix + "└── ", childrenPrefix + "    ");
+                next.print(buffer, childrenPrefix + "└── ", childrenPrefix + "    ",level + 1);
             }
         }
     }

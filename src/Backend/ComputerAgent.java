@@ -28,7 +28,7 @@ public class ComputerAgent implements IComputerAgent {
         EvaluationState move = minimax.Decision(currentState, level);
         currentState.updateState(move.getFromColumn(), State.COMPUTER_TURN);
         turns++;
-        System.out.println(currentState.getEvaluationState().toString());
+        currentState.getEvaluationState().printTree();
         return move.getFromColumn();
     }
 

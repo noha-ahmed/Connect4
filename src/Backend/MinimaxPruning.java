@@ -5,6 +5,7 @@ public class MinimaxPruning implements IMinimax{
     public EvaluationState Decision(State initial, int level) {
         EvaluationState child = maximize(initial, level, Integer.MIN_VALUE, Integer.MAX_VALUE);
         initial.getEvaluationState().setEvaluationValue(child.getEvaluationValue());
+        initial.getEvaluationState().setFromColumn(child.getFromColumn());
         return child;
     }
 
