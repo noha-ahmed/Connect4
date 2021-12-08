@@ -32,7 +32,6 @@ public class ShowTreeController implements Initializable{
 
 
     public void setTreeRoot(EvaluationState rootState){
-        System.out.println("set tree root");
         constructTree(rootState);
         drawTree();
     }
@@ -52,7 +51,6 @@ public class ShowTreeController implements Initializable{
         int parentId;
         boolean isEven = false;
         while( !parentStates.isEmpty() ){
-            System.out.println("new level");
             isEven = !isEven;
             while( !parentStates.isEmpty() ){
                 state = parentStates.pop();
@@ -77,8 +75,6 @@ public class ShowTreeController implements Initializable{
             parentIds = childIds;
             childStates = new LinkedList<>();
             childIds = new LinkedList<>();
-            System.out.println(parentIds.size());
-
         }
         
     }

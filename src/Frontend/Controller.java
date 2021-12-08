@@ -77,11 +77,8 @@ public class Controller implements Initializable {
     public void setSettings(String p, String s, int levels) {
         player = p;
         boolean withPruning = false;
-        System.out.println(s);
-
         if (s.equals("with alpha-beta pruning"))
             withPruning = true;
-        System.out.println(withPruning);
         computerAgent = new ComputerAgent(withPruning, levels);
         start();
     }

@@ -14,7 +14,6 @@ public class ComputerAgent implements IComputerAgent {
     public ComputerAgent(boolean withPruning ,int k){
         currentState = new State();
         level = Math.min(k , maxTurns);
-        System.out.println(withPruning);
         if( withPruning )
             minimax = new MinimaxPruning();
         else
@@ -29,6 +28,7 @@ public class ComputerAgent implements IComputerAgent {
         EvaluationState move = minimax.Decision(currentState, level);
         currentState.updateState(move.getFromColumn(), State.COMPUTER_TURN);
         turns++;
+        System.out.println(currentState.getEvaluationState().toString());
         return move.getFromColumn();
     }
 
