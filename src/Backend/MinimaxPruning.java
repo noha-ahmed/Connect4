@@ -20,10 +20,11 @@ public class MinimaxPruning implements IMinimax{
             State child = state.getChild(i , State.COMPUTER_TURN);
             if(child != null){
                 state.getEvaluationState().addChild(child.getEvaluationState());
-                EvaluationState temp = minimize(child, level - 1, alpha, beta);
-                child.getEvaluationState().setEvaluationValue(temp.getEvaluationValue());
-                if(temp.getEvaluationValue() > maxChild.getEvaluationValue())
-                    maxChild = temp;
+                int evalValue = minimize(child, level - 1, alpha, beta).getEvaluationValue();
+                child.getEvaluationState().setEvaluationValue(evalValue);
+                if(evalValue > maxChild.getEvaluationValue())
+                    maxChild = child.getEvaluationState();
+                //alpha = Math.max(alpha, maxChild.getEvaluationValue());
                 if(maxChild.getEvaluationValue() >= beta)
                     break;
                 if(maxChild.getEvaluationValue() > alpha)
