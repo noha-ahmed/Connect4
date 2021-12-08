@@ -62,6 +62,10 @@ public class State implements Cloneable{
         return Evaluation.evaluateScore(this.board);
     }
 
+    public int getPlayerScore(int moveColumn, int player){
+        return Evaluation.calculateMoveScore(moveColumn, player, this.board, this.freeCells);
+    }
+
     public int[] getFreeCells() {
         return this.freeCells;
     }

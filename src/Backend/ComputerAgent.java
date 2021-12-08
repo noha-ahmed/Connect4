@@ -24,10 +24,14 @@ public class ComputerAgent implements IComputerAgent {
     public int getNextMove(int playerMove){
         currentState.updateState(playerMove, State.PLAYER_TURN);
         turns++;
+        this.oppScore += currentState.getPlayerScore(playerMove, State.PLAYER_TURN);
+        System.out.println("Player Score : " + this.oppScore);
         level = Math.min(level , maxTurns - turns);
         currentState.setEvaluationState(new EvaluationState());
         EvaluationState move = minimax.Decision(currentState, level);
         currentState.updateState(move.getFromColumn(), State.COMPUTER_TURN);
+        this.compScore += currentState.getPlayerScore(move.getFromColumn(), State.COMPUTER_TURN);
+        System.out.println("computer score : " + this.compScore);
         turns++;
         return move.getFromColumn();
     }
@@ -38,57 +42,15 @@ public class ComputerAgent implements IComputerAgent {
         return State.COLUMNS_COUNT / 2;
     }
 
-    public int calculateMoveScore(int moveColumn, int player){
-        int score = 0;
-        int row = this.currentState.getFreeCells()[moveColumn] - 1;
-        int tempColumn = moveColumn;
-        int tempRow = row;
-        int pieces = 0;
-        // if the move made a vertical point
-        if(row >= 3){
-            for(int i = row; i > row - 4; i--){
-                if(this.currentState.getBoard()[i][moveColumn] == player)
-                    pieces++;
-            }
-            if(pieces == 4)
-                score ++;
-        }
-        pieces = 0;
-        // if the move made a horizontal point
-        //need to check if it's first in score scond third and forth
-        //check on the right of the move played
-        if(moveColumn <= 3){
-            for(int i = moveColumn; i < moveColumn + 4; i++){
-                if(this.currentState.getBoard()[row][i] == player)
-                    pieces++;
-            }
-            if(pieces == 4)
-                score ++;
-        }
-        pieces = 0;
-        //check on the left of the move played
-        if(moveColumn >= 3){
-            for(int i = moveColumn; i < moveColumn - 4; i--){
-                if(this.currentState.getBoard()[row][i] == player)
-                    pieces++;
-            }
-            if(pieces == 4)
-                score ++;
-        }
-        // if the move made a positive diagonal point
-        // if the move made a negative diagonal point
-        return score;
-    }
-    public int countPlayerPieces(int player, String lineType){
-        int piecesNum = 0;
-
-        return piecesNum;
-    }
-
     public EvaluationState getEvaluationState(){
         return this.currentState.getEvaluationState();
     }
-
+    public int getOpponentScore(){
+        return this.oppScore;
+    }
+    public int getComputerScore(){
+        return this.compScore;
+    }
     @Override
     public void restart() {
         this.turns = 0;
