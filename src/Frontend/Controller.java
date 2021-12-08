@@ -326,7 +326,7 @@ public class Controller implements Initializable {
 
                 // if the player played then this is the computer move
                 placeDisc(new Disc(false), computerAgent.getNextMove(column), false);
-                //showTree();
+                showTree();
                 // next turn is player
 
             }

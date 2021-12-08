@@ -3,45 +3,45 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class ArrowShape implements Shape {
-    private Shape one;
-    private Shape two;
+    private double x1 = 0;
+    private double y1 = 0;
+    private double x2 = 0;
+    private double y2 = 0;
     private String kind = "arrow";
+    private int id;
     private int value;
-    public ArrowShape(int value,Shape one, Shape two) {
-        this.one = one;
-        this.two = two;
+
+    public ArrowShape(int id ,int value,Shape shape1, Shape shape2 ) {
         this.value = value;
+        this.id =id;
+        if (shape1.getShapeKind().equals("circle")) {
+            this.x1 = shape1.getX_axis();
+            this.y1 = shape1.getY_axis()+60;
+            this.x2 = shape2.getX_axis();
+            this.y2 = shape2.getY_axis()+20;
+        } else if (shape1.getShapeKind().equals("rectangle")) {
+            this.x2 = shape2.getX_axis();
+            this.y2 = shape2.getY_axis()+20;
+            this.x1 = shape1.getX_axis();
+            this.y1 = shape1.getY_axis()+60;
+        }
+        
     } 
+    
 
     @Override
-    public void draw(GraphicsContext ctx) {
-        double x1 = 0;
-        double y1 = 0;
-        double x2 = 0;
-        double y2 = 0;
-
-        // if (one.getShapeKind().equals("circle")) {
-        //     x1 = ((MachineShape) one).getX_axis() + 50;
-        //     y1 = ((MachineShape) one).getY_axis();
-        //     x2 = ((QueueShape) two).getX_axis();
-        //     y2 = ((QueueShape) two).getY_axis();
-        // } else if (one.getShapeKind().equals("rectangle")) {
-        //     x2 = ((MachineShape) two).getX_axis();
-        //     y2 = ((MachineShape) two).getY_axis();
-        //     x1 = ((QueueShape) one).getX_axis() + 80;
-        //     y1 = ((QueueShape) one).getY_axis();
-        // }
+    public void draw(GraphicsContext ctx) { 
         ctx.beginPath();
         ctx.moveTo(x1, y1);
-        ctx.lineTo(x2, y2);
+        ctx.lineTo(x2, y2 - 5);
         ctx.setStroke(Color.BLACK);
         ctx.stroke();
         ctx.setFill(Color.BLACK);
         ctx.beginPath();
-        ctx.moveTo(x2, y2 - 10);
-        ctx.lineTo(x2 + 10, y2);
-        ctx.lineTo(x2, y2 + 10);
-        ctx.lineTo(x2, y2 - 10);
+        ctx.moveTo(x2 -5, y2 - 5);
+        ctx.lineTo(x2 + 5, y2 -5 );
+        ctx.lineTo(x2, y2);
+        ctx.lineTo(x2 -5, y2 - 5);
         ctx.closePath();
         ctx.setStroke(Color.BLACK);
         ctx.fill();
@@ -54,19 +54,39 @@ public class ArrowShape implements Shape {
         return "arrow";
     }
 
-    public Shape getOne() {
-        return one;
+
+
+    @Override
+    public int getId() {
+        // TODO Auto-generated method stub
+        return 0;
     }
 
-    public void setOne(Shape one) {
-        this.one = one;
+
+    @Override
+    public void setCoordinates(double x, double y) {
+        // TODO Auto-generated method stub
+        
     }
 
-    public Shape getTwo() {
-        return two;
+
+    @Override
+    public int getParentId() {
+        // TODO Auto-generated method stub
+        return 0;
     }
 
-    public void setTwo(Shape two) {
-        this.two = two;
+
+    @Override
+    public double getY_axis() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+
+    @Override
+    public double getX_axis() {
+        // TODO Auto-generated method stub
+        return 0;
     }
 }

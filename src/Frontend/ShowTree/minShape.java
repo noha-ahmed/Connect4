@@ -102,11 +102,23 @@ public class MinShape implements Shape {
             ctx.setStroke(this.colorOfProduct.darker().darker());
             ctx.setFill(this.colorOfProduct);
         }
-        ctx.strokeOval(this.x_axis, this.y_axis, 50, 50);
+        ctx.strokeOval(this.x_axis - 25 , this.y_axis + 25, 50, 50);
         ctx.fillOval(this.x_axis, this.y_axis, 50, 50);
         ctx.setFill(Color.WHITE);
         ctx.fillText("M" + this.id, this.x_axis + 16, this.y_axis + 30);
 
+    }
+
+    @Override
+    public void setCoordinates(double x, double y) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public int getParentId() {
+        // TODO Auto-generated method stub
+        return 0;
     }
 
 
