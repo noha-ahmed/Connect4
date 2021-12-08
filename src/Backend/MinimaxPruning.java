@@ -24,11 +24,11 @@ public class MinimaxPruning implements IMinimax{
                 child.getEvaluationState().setEvaluationValue(evalValue);
                 if(evalValue > maxChild.getEvaluationValue())
                     maxChild = child.getEvaluationState();
-                //alpha = Math.max(alpha, maxChild.getEvaluationValue());
+                alpha = Math.max(alpha, maxChild.getEvaluationValue());
                 if(maxChild.getEvaluationValue() >= beta)
                     break;
-                if(maxChild.getEvaluationValue() > alpha)
-                    alpha = maxChild.getEvaluationValue();
+//                if(maxChild.getEvaluationValue() > alpha)
+//                    alpha = maxChild.getEvaluationValue();
             }
         }
         return maxChild;
@@ -50,10 +50,11 @@ public class MinimaxPruning implements IMinimax{
                 if( evalValue < minChild.getEvaluationValue() ){
                     minChild = child.getEvaluationState();
                 }
+                beta = Math.min(beta, minChild.getEvaluationValue());
                 if(minChild.getEvaluationValue() <= alpha)
                     break;
-                if(minChild.getEvaluationValue() < beta)
-                    beta = minChild.getEvaluationValue();
+//                if(minChild.getEvaluationValue() < beta)
+//                    beta = minChild.getEvaluationValue();
             }
         }
         return minChild;
