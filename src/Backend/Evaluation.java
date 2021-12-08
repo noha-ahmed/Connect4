@@ -102,8 +102,8 @@ public class Evaluation {
         if(oppPiece==4){
             return -1*QUADRUPLE_SCORE;
         }else if(oppPiece==3 && empty==1){
-            return -1*60;
-        }else if(oppPiece==2 && empty==2){
+            return -60;
+       }else if(oppPiece==2 && empty==2){
             return -1*DOUBLE_SCORE;
         }
         return 0;
@@ -123,3 +123,4 @@ public class Evaluation {
     }
 
 }
+

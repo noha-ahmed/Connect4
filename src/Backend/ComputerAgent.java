@@ -16,6 +16,7 @@ public class ComputerAgent implements IComputerAgent {
             minimax = new MinimaxPruning();
         else
             minimax = new MinimaxWithoutPruning();
+        System.out.println(withPruning);
     }
 
     public int getNextMove(int playerMove){
@@ -42,13 +43,25 @@ public class ComputerAgent implements IComputerAgent {
 
 class Main2{
     public static void main(String[] args){
-        ComputerAgent game = new ComputerAgent(true, 10);
+        /*ComputerAgent game = new ComputerAgent(false, 3);
         Scanner sc = new Scanner(System.in);
         while(game.turns < game.maxTurns){
             System.out.println("enter player move: ");
             int oppMove = sc.nextInt();
             int compMove = game.getNextMove(oppMove);
             System.out.println("computer move at: " + compMove);
-        }
+        }*/
+        int[][] board = new int[6][7];
+        ComputerAgent game = new ComputerAgent(false, 3);
+        board[0][0]=2;
+        board[0][1]=2;
+        board[1][0]=1;
+        board[1][1]=2;
+        board[2][0]=2;
+        board[3][0]=1;
+        board[4][0]=1;
+        board[5][0]=1;
+        game.currentState.setBoard(board);
+        game.getNextMove(1);
     }
 }
