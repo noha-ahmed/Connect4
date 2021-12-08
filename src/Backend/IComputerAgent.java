@@ -5,4 +5,6 @@ public interface IComputerAgent {
     public int getFirstMove();
     public EvaluationState getEvaluationState();
     public void restart();
+    public int getComputerScore();
+    public int getPlayerScore();
 }

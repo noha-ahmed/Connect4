@@ -14,7 +14,6 @@ public class ComputerAgent implements IComputerAgent {
     public ComputerAgent(boolean withPruning ,int k){
         currentState = new State();
         level = Math.min(k , maxTurns);
-        System.out.println(withPruning);
         if( withPruning )
             minimax = new MinimaxPruning();
         else
@@ -33,6 +32,7 @@ public class ComputerAgent implements IComputerAgent {
         this.compScore += currentState.getPlayerScore(move.getFromColumn(), State.COMPUTER_TURN);
         System.out.println("computer score : " + this.compScore);
         turns++;
+        currentState.getEvaluationState().printTree();
         return move.getFromColumn();
     }
 
@@ -55,6 +55,18 @@ public class ComputerAgent implements IComputerAgent {
     public void restart() {
         this.turns = 0;
         this.currentState = new State();
+    }
+
+    @Override
+    public int getComputerScore() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public int getPlayerScore() {
+        // TODO Auto-generated method stub
+        return 0;
     }
 }
 

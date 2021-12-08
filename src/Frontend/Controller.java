@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.input.MouseEvent;
@@ -50,6 +51,10 @@ public class Controller implements Initializable {
     @FXML
     public Pane discRoot = new Pane();
     @FXML
+    public Label playerScore;
+    @FXML
+    public Label computerScore;
+    @FXML
     public Pane connect4Pane = new Pane();
     public static Text textWinnerMessage = new Text();
     List<Rectangle> rectangles = new ArrayList<>();
@@ -72,11 +77,8 @@ public class Controller implements Initializable {
     public void setSettings(String p, String s, int levels) {
         player = p;
         boolean withPruning = false;
-        System.out.println(s);
-
         if (s.equals("with alpha-beta pruning"))
             withPruning = true;
-        System.out.println(withPruning);
         computerAgent = new ComputerAgent(withPruning, levels);
         start();
     }
@@ -292,20 +294,18 @@ public class Controller implements Initializable {
         }
     }
 
-    private void placeDisc(Disc disc, int column, boolean playerTurn) {
+    private void placeDisc(Disc disc, int column, boolean playerTurn) {  
         disablePane();
-        boolean redMove = disc.getColor();
         int row = ROWS - 1;
-        do {
+        while (row >= 0) {
             if (!getDisc(column, row).isPresent())
                 break;
-
             row--;
-        } while (row >= 0);
-
-        if (row < 0)
+        } 
+        if (row < 0){
+            enablePane();
             return;
-
+        }
         grid[column][row] = disc;
         discRoot.getChildren().add(disc);
         disc.setTranslateX(column * (TILE_SIZE + 5) + TILE_SIZE / 4);
@@ -319,7 +319,8 @@ public class Controller implements Initializable {
 
                 // if the player played then this is the computer move
                 placeDisc(new Disc(false), computerAgent.getNextMove(column), false);
-                //showTree();
+                playerScore.setText("" + computerAgent.getPlayerScore());
+                computerScore.setText("" + computerAgent.getComputerScore());
                 // next turn is player
 
             }
@@ -329,10 +330,10 @@ public class Controller implements Initializable {
 
     }
 
-    public void showTree() {
+    public void showTree(ActionEvent event) {
         Parent root;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("showTree.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ShowTree/showTree.fxml"));
             root = loader.load();
             ShowTreeController c = loader.getController();
             Scene scene = new Scene(root);
