@@ -43,18 +43,14 @@ public class ShowTreeController implements Initializable{
     private ListView<String>initialProducts;
     @FXML
     private TextField number;
-    public  ArrayList<Shape> shapesList=new ArrayList<>();
-    private static final int Limit = 7;
-    private EvaluationState rootState;
-    private int shapeWidth = 80;
-    private int spaceWidth = 10;
-    private int levelDifference = 60;
+    private int shapeWidth = 40;
+    private double spaceWidth = 100;
+    private int levelDifference = 200;
     private double middleX;
     private int globalId = 0;
 
 
     public void setTreeRoot(EvaluationState rootState){
-        this.rootState = rootState;
         System.out.println("set tree root");
         constructTree(rootState);
         drawTree();
@@ -116,9 +112,11 @@ public class ShowTreeController implements Initializable{
 
     public void constructShapes( LinkedList<EvaluationState> states , LinkedList<Integer> ids){
         int nodesCount = ids.size();
-        int levelWidth = nodesCount*this.shapeWidth + (nodesCount - 1)*this.spaceWidth; 
+        double levelWidth = nodesCount*this.shapeWidth + (nodesCount - 1)*this.spaceWidth; 
         double x = this.middleX - (levelWidth/2);
-        int increment = this.shapeWidth + this.spaceWidth;
+        
+        double increment = this.shapeWidth + this.spaceWidth;
+        this.spaceWidth = this.spaceWidth/5;
         Iterator statesIterator = states.iterator();
         Iterator idsIterator = ids.iterator();
         while( statesIterator.hasNext() ){

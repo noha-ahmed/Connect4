@@ -298,15 +298,16 @@ public class Controller implements Initializable {
     }
 
     private void placeDisc(Disc disc, int column, boolean playerTurn) {
+        if( getDisc(column, 0).isPresent() ) 
+            return;
         disablePane();
-        boolean redMove = disc.getColor();
+       
         int row = ROWS - 1;
-        do {
+        while (row >= 0) {
             if (!getDisc(column, row).isPresent())
                 break;
-
             row--;
-        } while (row >= 0);
+        } 
 
         if (row < 0)
             return;

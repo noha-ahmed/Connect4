@@ -4,6 +4,7 @@ public class MinimaxPruning implements IMinimax{
     @Override
     public EvaluationState Decision(State initial, int level) {
         EvaluationState child = maximize(initial, level, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        initial.getEvaluationState().setEvaluationValue(child.getEvaluationValue());
         return child;
     }
 
@@ -45,6 +46,7 @@ public class MinimaxPruning implements IMinimax{
         for( int i = 0 ; i < 7 ; i++ ){
             State child = state.getChild(i , State.PLAYER_TURN);
             if( child != null ){
+                state.getEvaluationState().addChild(child.getEvaluationState());
                 int evalValue = maximize(child, level -1 , alpha, beta).getEvaluationValue();
                 child.getEvaluationState().setEvaluationValue(evalValue);
                 if( evalValue < minChild.getEvaluationValue() ){

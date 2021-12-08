@@ -2,7 +2,7 @@ package Backend;
 
 public class MinimaxWithoutPruning implements IMinimax{
 
-    public static EvaluationState Maximize(State state, int level){
+    public static EvaluationState maximize(State state, int level){
         if(level==0){
             int eval = state.evaluateState();
             state.getEvaluationState().setEvaluationValue(eval);
@@ -13,7 +13,7 @@ public class MinimaxWithoutPruning implements IMinimax{
         for(int i=0; i<7; i++){
             State child = state.getChild(i , State.COMPUTER_TURN);
             if(child!=null){
-                child.getEvaluationState().setEvaluationValue(Minimize(child,level-1).getEvaluationValue());
+                child.getEvaluationState().setEvaluationValue(minimize(child,level-1).getEvaluationValue());
                 state.getEvaluationState().addChild(child.getEvaluationState());
                 if(child.getEvaluationState().getEvaluationValue()>state.getEvaluationState().getEvaluationValue()){
                     state.getEvaluationState().setEvaluationValue(child.getEvaluationState().getEvaluationValue());
@@ -24,7 +24,7 @@ public class MinimaxWithoutPruning implements IMinimax{
         return maxChild;
     }
 
-    public static EvaluationState Minimize(State state, int level){
+    public static EvaluationState minimize(State state, int level){
         if(level==0){
             int eval = state.evaluateState();
             state.getEvaluationState().setEvaluationValue(eval);
@@ -35,7 +35,7 @@ public class MinimaxWithoutPruning implements IMinimax{
         for(int i=0; i<7; i++){
             State child = state.getChild(i , State.PLAYER_TURN);
             if(child!=null){
-                child.getEvaluationState().setEvaluationValue(Maximize(child,level-1).getEvaluationValue());
+                child.getEvaluationState().setEvaluationValue(maximize(child,level-1).getEvaluationValue());
                 state.getEvaluationState().addChild(child.getEvaluationState());
                 if(child.getEvaluationState().getEvaluationValue()<state.getEvaluationState().getEvaluationValue()){
                     state.getEvaluationState().setEvaluationValue(child.getEvaluationState().getEvaluationValue());
@@ -48,6 +48,8 @@ public class MinimaxWithoutPruning implements IMinimax{
 
     @Override
     public EvaluationState Decision(State initial, int level) {
-        return Maximize(initial,level);
+        EvaluationState child = maximize(initial, level);
+        initial.getEvaluationState().setEvaluationValue(child.getEvaluationValue());
+        return child;
     }
 }
