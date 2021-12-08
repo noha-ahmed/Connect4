@@ -10,8 +10,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.input.MouseEvent;
@@ -44,7 +42,6 @@ public class Controller implements Initializable {
     private static final int ROWS = State.ROW_COUNT;
     private static final int COMPUTER = State.COMPUTER_TURN;
     public static final int PLAYER = State.PLAYER_TURN;
-    public GameHelper gameHelper;
     // used components
     private Disc[][] grid = new Disc[COLUMNS][ROWS];
     public String player = "";
@@ -62,8 +59,6 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         disablePane();
-        gameHelper = new GameHelper();
-        gameHelper.setController(this);
         connect4Pane.getChildren().add(discRoot);
         Shape gridShape = makeGrid();
         connect4Pane.getChildren().add(gridShape);
@@ -136,6 +131,7 @@ public class Controller implements Initializable {
         restart.setDisable(false);
         grid = new Disc[COLUMNS][ROWS];
         discRoot.getChildren().clear();
+        computerAgent.restart();
         // initialize board in backend
 
         enablePane();
@@ -319,14 +315,11 @@ public class Controller implements Initializable {
         TranslateTransition animation = new TranslateTransition(Duration.seconds(0.5), disc);
         animation.setToY(row * (TILE_SIZE + 5) + TILE_SIZE / 4);
         animation.setOnFinished(e -> {
-            if (gameHelper.gameEnded(column, currentRow, redMove)) {
-                gameHelper.gameOver(redMove);
-                return;
-            } else if (playerTurn) {
+            if (playerTurn) {
 
                 // if the player played then this is the computer move
                 placeDisc(new Disc(false), computerAgent.getNextMove(column), false);
-                showTree();
+                //showTree();
                 // next turn is player
 
             }

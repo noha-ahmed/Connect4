@@ -39,6 +39,12 @@ public class ComputerAgent implements IComputerAgent {
     public EvaluationState getEvaluationState(){
         return this.currentState.getEvaluationState();
     }
+
+    @Override
+    public void restart() {
+        // TODO Auto-generated method stub
+        
+    }
 }
 
 class Main2{

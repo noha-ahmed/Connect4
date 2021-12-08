@@ -6,19 +6,21 @@ import javafx.scene.paint.Color;
 import java.util.LinkedList;
 
 public class MinShape implements Shape {
-    private final String shapeKind = "circle";
+    private final String shapeKind = "MinShape";
     private double x_axis;
     private double y_axis;
-    private final int id;
-    private int globalId;
-    private Color colorOfProduct;
-    private Boolean inUse = false;
-    private LinkedList<Integer> inputQueue = new LinkedList<Integer>();
-    private LinkedList<Integer> outputQueue = new LinkedList<Integer>();
+    private int id;
+    private int parentId;
+    private int value = 0;
+    private int halfSideLength = 20;
+  
+    public MinShape(int parentId, int id, int value) {
+        this.parentId = parentId;
+        this.id = id; 
+        this.value = value;
+    }
 
-    public MinShape(int globalId, int id, double x, double y) {
-        this.globalId = globalId;
-        this.id = id;
+    public void setCoordinates( double x , double y){
         this.x_axis = x;
         this.y_axis = y;
     }
@@ -27,32 +29,12 @@ public class MinShape implements Shape {
         return shapeKind;
     }
 
-    public int getGlobalId() {
-        return globalId;
+    public int getParentId() {
+        return parentId;
     }
 
-    public void setGlobalId(int globalId) {
-        this.globalId = globalId;
-    }
-
-    public void setColorOfProduct(Color colorOfProduct) {
-        this.colorOfProduct = colorOfProduct;
-    }
-
-    public double getX_axis() {
-        return x_axis;
-    }
-
-    public void setX_axis(double x_axis) {
-        this.x_axis = x_axis;
-    }
-
-    public void setOutputQueue(LinkedList<Integer> outputQueue) {
-        this.outputQueue = outputQueue;
-    }
-
-    public void setInputQueue(LinkedList<Integer> inputQueue) {
-        this.inputQueue = inputQueue;
+    public int getId() {
+        return id;
     }
 
     public double getY_axis() {
@@ -63,64 +45,32 @@ public class MinShape implements Shape {
         this.y_axis = y_axis;
     }
 
-    public int getId() {
-        return id;
+    public double getX_axis() {
+        return x_axis;
     }
 
-    public Boolean getInUse() {
-        return inUse;
-    }
-
-    public void setInUse(Boolean inUse, Color color) {
-        this.inUse = inUse;
-        this.colorOfProduct = color;
-    }
-
-    public void addInputQueue(int q_ID) {
-        this.inputQueue.add(q_ID);
+    public void setX_axis(double x_axis) {
+        this.x_axis = x_axis;
     }
 
 
-    public void addOutputQueue(int q_ID){
-        this.outputQueue.add(q_ID);
-    }
 
-    public LinkedList<Integer> getInputQueue(){
-        return  this.inputQueue;
-    }
-    public LinkedList<Integer> getOutputQueue(){
-        return  this.outputQueue;
-    }
 
     @Override
     public void draw(GraphicsContext ctx) {
-        if (!inUse) {
-            ctx.setStroke(Color.FORESTGREEN.darker().darker());
-            ctx.setFill(Color.FORESTGREEN);
-
-        } else {
-            ctx.setStroke(this.colorOfProduct.darker().darker());
-            ctx.setFill(this.colorOfProduct);
-        }
-        ctx.strokeOval(this.x_axis - 25 , this.y_axis + 25, 50, 50);
-        ctx.fillOval(this.x_axis, this.y_axis, 50, 50);
+        ctx.beginPath();
+        ctx.moveTo(x_axis - halfSideLength, y_axis);
+        ctx.lineTo(x_axis + halfSideLength, y_axis);
+        ctx.lineTo(x_axis, y_axis + halfSideLength*2);
+        ctx.lineTo(x_axis -halfSideLength, y_axis);
+        ctx.closePath();
+        ctx.setStroke(Color.RED.brighter().brighter().brighter());
+        ctx.fill();
+        ctx.stroke();
         ctx.setFill(Color.WHITE);
-        ctx.fillText("M" + this.id, this.x_axis + 16, this.y_axis + 30);
+        ctx.fillText("" + this.value, this.x_axis - 2, this.y_axis + halfSideLength );
 
     }
-
-    @Override
-    public void setCoordinates(double x, double y) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public int getParentId() {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-
 
 
 }

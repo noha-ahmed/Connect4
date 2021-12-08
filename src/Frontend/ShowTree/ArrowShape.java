@@ -31,6 +31,9 @@ public class ArrowShape implements Shape {
 
     @Override
     public void draw(GraphicsContext ctx) { 
+        ctx.setStroke(Color.BLACK);
+        ctx.stroke();
+        ctx.setFill(Color.BLACK);
         ctx.beginPath();
         ctx.moveTo(x1, y1);
         ctx.lineTo(x2, y2 - 5);

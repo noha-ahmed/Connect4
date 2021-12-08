@@ -52,7 +52,7 @@ public class MinimaxPruning implements IMinimax{
                 if(minChild.getEvaluationValue() <= alpha)
                     break;
                 if(minChild.getEvaluationValue() < beta)
-                    alpha = minChild.getEvaluationValue();
+                    beta = minChild.getEvaluationValue();
             }
         }
         return minChild;

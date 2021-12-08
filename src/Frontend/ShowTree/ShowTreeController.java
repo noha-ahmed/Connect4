@@ -37,7 +37,7 @@ public class ShowTreeController implements Initializable{
     private Button edit;
 
     @FXML
-    private Canvas canvas;
+    public Canvas canvas;
     private GraphicsContext ctx;
     @FXML
     private ListView<String>initialProducts;
@@ -93,7 +93,7 @@ public class ShowTreeController implements Initializable{
                     childStates.add(child);
                     if(isEven){
                         //to be min
-                        shape = new MaxShape(parentId, globalId, child.getEvaluationValue());
+                        shape = new MinShape(parentId, globalId, child.getEvaluationValue());
                     }
                     else{
                         shape = new MaxShape(parentId, globalId, child.getEvaluationValue());
