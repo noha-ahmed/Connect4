@@ -44,6 +44,9 @@ public class ShowTreeController {
     private static final int Limit = 7;
     private EvaluationState rootState;
 
+    public ShowTreeController(){
+        ctx=canvas.getGraphicsContext2D();
+    }
 
     public void setTreeRoot(EvaluationState rootState){
         this.rootState = rootState;
@@ -54,6 +57,13 @@ public class ShowTreeController {
         for(int i=0;i<list.size();i++){
 
         }
+    }
+
+    public void drawTreeRoot( EvaluationState evalState ){
+        ctx.setFill(Color.TRANSPARENT);
+        ctx.clearRect(0, 0, canvas.getWidth() - 1, canvas.getHeight() - 1);
+        Shape shape = new MaxShape(0, 1, canvas.getWidth()/2, canvas.getHeight()-2);
+        shape.draw(ctx);
     }
 
     public void reDraw() {

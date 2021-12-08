@@ -4,7 +4,7 @@ import javafx.scene.paint.Color;
 
 import java.util.LinkedList;
 
-public class maxShape implements Shape {
+public class MaxShape implements Shape {
     private final String shapeKind = "rectangle";
     private double x_axis;
     private double y_axis;
@@ -13,7 +13,7 @@ public class maxShape implements Shape {
     private int value;
     private int fromColumn;
   
-    public maxShape(int parentId, int id, double x, double y) {
+    public MaxShape(int parentId, int id, double x, double y) {
         this.parentId = parentId;
         this.id = id;
         this.x_axis = x;

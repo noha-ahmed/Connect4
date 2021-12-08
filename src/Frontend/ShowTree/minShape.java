@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 
 import java.util.LinkedList;
 
-public class minShape implements Shape {
+public class MinShape implements Shape {
     private final String shapeKind = "circle";
     private double x_axis;
     private double y_axis;
@@ -16,7 +16,7 @@ public class minShape implements Shape {
     private LinkedList<Integer> inputQueue = new LinkedList<Integer>();
     private LinkedList<Integer> outputQueue = new LinkedList<Integer>();
 
-    public minShape(int globalId, int id, double x, double y) {
+    public MinShape(int globalId, int id, double x, double y) {
         this.globalId = globalId;
         this.id = id;
         this.x_axis = x;
