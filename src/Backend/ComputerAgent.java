@@ -8,15 +8,17 @@ public class ComputerAgent implements IComputerAgent {
     int turns = 0;
     int maxTurns = State.ROW_COUNT * State.COLUMNS_COUNT;
     State currentState;
+    private int compScore = 0;
+    private int oppScore = 0;
 
     public ComputerAgent(boolean withPruning ,int k){
         currentState = new State();
         level = Math.min(k , maxTurns);
+        System.out.println(withPruning);
         if( withPruning )
             minimax = new MinimaxPruning();
         else
             minimax = new MinimaxWithoutPruning();
-        System.out.println(withPruning);
     }
 
     public int getNextMove(int playerMove){
@@ -36,14 +38,61 @@ public class ComputerAgent implements IComputerAgent {
         return State.COLUMNS_COUNT / 2;
     }
 
+    public int calculateMoveScore(int moveColumn, int player){
+        int score = 0;
+        int row = this.currentState.getFreeCells()[moveColumn] - 1;
+        int tempColumn = moveColumn;
+        int tempRow = row;
+        int pieces = 0;
+        // if the move made a vertical point
+        if(row >= 3){
+            for(int i = row; i > row - 4; i--){
+                if(this.currentState.getBoard()[i][moveColumn] == player)
+                    pieces++;
+            }
+            if(pieces == 4)
+                score ++;
+        }
+        pieces = 0;
+        // if the move made a horizontal point
+        //need to check if it's first in score scond third and forth
+        //check on the right of the move played
+        if(moveColumn <= 3){
+            for(int i = moveColumn; i < moveColumn + 4; i++){
+                if(this.currentState.getBoard()[row][i] == player)
+                    pieces++;
+            }
+            if(pieces == 4)
+                score ++;
+        }
+        pieces = 0;
+        //check on the left of the move played
+        if(moveColumn >= 3){
+            for(int i = moveColumn; i < moveColumn - 4; i--){
+                if(this.currentState.getBoard()[row][i] == player)
+                    pieces++;
+            }
+            if(pieces == 4)
+                score ++;
+        }
+        // if the move made a positive diagonal point
+        // if the move made a negative diagonal point
+        return score;
+    }
+    public int countPlayerPieces(int player, String lineType){
+        int piecesNum = 0;
+
+        return piecesNum;
+    }
+
     public EvaluationState getEvaluationState(){
         return this.currentState.getEvaluationState();
     }
 
     @Override
     public void restart() {
-        // TODO Auto-generated method stub
-        
+        this.turns = 0;
+        this.currentState = new State();
     }
 
     @Override
@@ -61,7 +110,7 @@ public class ComputerAgent implements IComputerAgent {
 
 class Main2{
     public static void main(String[] args){
-        /*ComputerAgent game = new ComputerAgent(false, 3);
+       /* ComputerAgent game = new ComputerAgent(true, 10);
         Scanner sc = new Scanner(System.in);
         while(game.turns < game.maxTurns){
             System.out.println("enter player move: ");
