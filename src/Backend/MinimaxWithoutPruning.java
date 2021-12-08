@@ -8,6 +8,8 @@ public class MinimaxWithoutPruning implements IMinimax{
             state.getEvaluationState().setEvaluationValue(eval);
             return state.getEvaluationState();
         }
+        state.getEvaluationState().setEvaluationValue(Integer.MIN_VALUE);
+        EvaluationState maxChild = new EvaluationState();
         for(int i=0; i<7; i++){
             State child = state.getChild(i , State.COMPUTER_TURN);
             if(child!=null){
@@ -15,10 +17,11 @@ public class MinimaxWithoutPruning implements IMinimax{
                 state.getEvaluationState().addChild(child.getEvaluationState());
                 if(child.getEvaluationState().getEvaluationValue()>state.getEvaluationState().getEvaluationValue()){
                     state.getEvaluationState().setEvaluationValue(child.getEvaluationState().getEvaluationValue());
+                    maxChild=child.getEvaluationState();
                 }
             }
         }
-        return state.getEvaluationState();
+        return maxChild;
     }
 
     public static EvaluationState Minimize(State state, int level){
@@ -27,6 +30,8 @@ public class MinimaxWithoutPruning implements IMinimax{
             state.getEvaluationState().setEvaluationValue(eval);
             return state.getEvaluationState();
         }
+        state.getEvaluationState().setEvaluationValue(Integer.MAX_VALUE);
+        EvaluationState minChild = new EvaluationState();
         for(int i=0; i<7; i++){
             State child = state.getChild(i , State.PLAYER_TURN);
             if(child!=null){
@@ -34,10 +39,11 @@ public class MinimaxWithoutPruning implements IMinimax{
                 state.getEvaluationState().addChild(child.getEvaluationState());
                 if(child.getEvaluationState().getEvaluationValue()<state.getEvaluationState().getEvaluationValue()){
                     state.getEvaluationState().setEvaluationValue(child.getEvaluationState().getEvaluationValue());
+                    minChild = child.getEvaluationState();
                 }
             }
         }
-        return state.getEvaluationState();
+        return minChild;
     }
 
     @Override
