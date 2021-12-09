@@ -99,10 +99,3 @@ public class State implements Cloneable{
         }
     }
 }
-class test{
-    public static void main(String[] args){
-        State initial = new State();
-        //State child = initial.getChild(0);
-        System.out.println("Done");
-    }
-}

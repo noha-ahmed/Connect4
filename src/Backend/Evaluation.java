@@ -212,17 +212,5 @@ public class Evaluation {
             System.out.println();
         }
     }
-    public static void main(String[] args){
-        int[][] arr = {{0,0,0,1,0,0,0} ,
-                       {0,0,0,0,1,0,0},
-                       {0,0,0,0,0,1,0},
-                       {0,0,0,0,0,0,1},
-                       {0,0,0,0,0,0,0},
-                       {0,0,0,0,0,0,0}};
-        int[] cells = {4,3,2,1,0,0,4};
-        System.out.println(calculateMoveScore(6,1, arr, cells));
-        printArr(arr);
-    }
-
 }
 
