@@ -15,6 +15,8 @@ public class ComputerAgent implements IComputerAgent {
     State currentState;
     long maxRunningTime = Long.MIN_VALUE;
     long prevRunningTime = 0;
+    long avRunningTime = 0;
+    int avNodesExpanded = 0;
     int maxNodesExpanded = Integer.MIN_VALUE;
     private int compScore = 0;
     private int oppScore = 0;
@@ -50,6 +52,8 @@ public class ComputerAgent implements IComputerAgent {
         this.compScore += currentState.getPlayerScore(move.getFromColumn(), State.COMPUTER_TURN);
         turns++;
         prevRunningTime = (end-start);
+        avRunningTime+= prevRunningTime/21;
+        avNodesExpanded+= minimax.getNodesExpanded()/21;
         if( prevRunningTime > maxRunningTime ){
             maxRunningTime = prevRunningTime;
         }
@@ -81,6 +85,8 @@ public class ComputerAgent implements IComputerAgent {
         this.maxRunningTime = Long.MIN_VALUE;
         this.maxNodesExpanded = Integer.MIN_VALUE;
         this.level = this.k;
+        this.avRunningTime = 0;
+        this.avNodesExpanded = 0;
     }
 
     @Override
@@ -124,7 +130,8 @@ public class ComputerAgent implements IComputerAgent {
         else
             sol += "<< Minimix without Pruning >>  ";
         sol += "k: " + this.k + ",  Computer Score: " + this.compScore + ",  Player Score: " + this.oppScore + 
-        ",  Max Running Time: " + df.format(this.maxRunningTime) + " microseconds, Max Nodes Expanded: " + this.maxNodesExpanded;
+        ",  Max Running Time: " + df.format(this.maxRunningTime) + " microseconds, Max Nodes Expanded: " + this.maxNodesExpanded
+        + ",  Average Running Time: " + df.format(this.avRunningTime) + " microseconds, Average Nodes Expanded: " + this.avNodesExpanded;
         try {
             File file = new File("results.txt");
             if (!file.exists()) {
