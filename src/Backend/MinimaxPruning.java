@@ -31,8 +31,6 @@ public class MinimaxPruning implements IMinimax{
                 alpha = Math.max(alpha, maxChild.getEvaluationValue());
                 if(maxChild.getEvaluationValue() >= beta)
                     break;
-//                if(maxChild.getEvaluationValue() > alpha)
-//                    alpha = maxChild.getEvaluationValue();
             }
         }
         return maxChild;
@@ -59,8 +57,6 @@ public class MinimaxPruning implements IMinimax{
                 beta = Math.min(beta, minChild.getEvaluationValue());
                 if(minChild.getEvaluationValue() <= alpha)
                     break;
-//                if(minChild.getEvaluationValue() < beta)
-//                    beta = minChild.getEvaluationValue();
             }
         }
         return minChild;
