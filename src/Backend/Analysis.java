@@ -1,5 +1,6 @@
 package Backend;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class Analysis {
@@ -10,13 +11,14 @@ public class Analysis {
     public static void analyze(boolean isPruning){
         IComputerAgent computerAgent;
         double start , end;
-        int m;
         int playerMove;
         double meanTime;
         double meanScoreDifference;
         double[] time = new double[kLimit];
         int[] scoreDifference = new int[kLimit];
+        int[] kValues = new int[kLimit];
         for( int k = 0 ; k < kLimit ; k++ ){
+            kValues[k] = k+1;
             computerAgent = new ComputerAgent(isPruning, k + 1);
             meanTime = 0;
             meanScoreDifference = 0;
@@ -32,17 +34,22 @@ public class Analysis {
                     end = System.nanoTime();
                     meanTime += (end-start)/21;
                 }
+
                 meanScoreDifference+= (computerAgent.getComputerScore() - computerAgent.getPlayerScore());
                 meanTime+= (meanTime/testCases);
+                computerAgent.restart();
             }
             meanScoreDifference = meanScoreDifference/testCases;
             scoreDifference[k] = (int) meanScoreDifference;
-            time[k] = meanTime;
-            
+            time[k] = meanTime;   
         }
+        System.out.println("Minimax with Pruning Analysis:/n");
+        System.out.println("K Values : " + Arrays.toString(kValues));
+        System.out.println("Running Time : " + Arrays.toString(time));
+        System.out.println("Score Difference : " + Arrays.toString(scoreDifference));
     }
     public static void main(String[] args){
-
+        
     }
     
 }
