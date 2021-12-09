@@ -15,7 +15,7 @@ public class MinimaxWithoutPruning implements IMinimax{
             State child = state.getChild(i , State.COMPUTER_TURN);
             if(child!=null){
                 child.getEvaluationState().setEvaluationValue(minimize(child,level-1).getEvaluationValue());
-                state.getEvaluationState().addChild(child.getEvaluationState());
+               // state.getEvaluationState().addChild(child.getEvaluationState());
                 if(child.getEvaluationState().getEvaluationValue()>state.getEvaluationState().getEvaluationValue()){
                     state.getEvaluationState().setEvaluationValue(child.getEvaluationState().getEvaluationValue());
                     maxChild=child.getEvaluationState();
@@ -38,7 +38,7 @@ public class MinimaxWithoutPruning implements IMinimax{
             State child = state.getChild(i , State.PLAYER_TURN);
             if(child!=null){
                 child.getEvaluationState().setEvaluationValue(maximize(child,level-1).getEvaluationValue());
-                state.getEvaluationState().addChild(child.getEvaluationState());
+               // state.getEvaluationState().addChild(child.getEvaluationState());
                 if(child.getEvaluationState().getEvaluationValue()<state.getEvaluationState().getEvaluationValue()){
                     state.getEvaluationState().setEvaluationValue(child.getEvaluationState().getEvaluationValue());
                     minChild = child.getEvaluationState();

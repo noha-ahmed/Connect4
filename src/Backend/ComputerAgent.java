@@ -150,7 +150,7 @@ public class ComputerAgent implements IComputerAgent {
 
 class Main2{
     public static void main(String[] args){
-        ComputerAgent game = new ComputerAgent(true, 5);
+        ComputerAgent game = new ComputerAgent(false, 11);
         Scanner sc = new Scanner(System.in);
         while(game.turns < game.maxTurns){
             System.out.println("---------------------------------------------------------------");
