@@ -129,9 +129,10 @@ public class ComputerAgent implements IComputerAgent {
             sol += "<< Minimix with Pruning >>  ";
         else
             sol += "<< Minimix without Pruning >>  ";
-        sol += "k: " + this.k + ",  Computer Score: " + this.compScore + ",  Player Score: " + this.oppScore + 
-        ",  Max Running Time: " + df.format(this.maxRunningTime) + " microseconds, Max Nodes Expanded: " + this.maxNodesExpanded
-        + ",  Average Running Time: " + df.format(this.avRunningTime) + " microseconds, Average Nodes Expanded: " + this.avNodesExpanded;
+        sol += "k: " + this.k 
+        + ",  Average Running Time: " + df.format(this.avRunningTime/1000) + " milliseconds,  Max Running Time: " + df.format(this.maxRunningTime/1000) 
+         + " milliseconds, Average Nodes Expanded: " + this.avNodesExpanded + ", Max Nodes Expanded: " + this.maxNodesExpanded
+         + ",  Computer Score: " + this.compScore + ",  Player Score: " + this.oppScore ;
         try {
             File file = new File("results.txt");
             if (!file.exists()) {
