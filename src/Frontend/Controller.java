@@ -136,6 +136,8 @@ public class Controller implements Initializable {
         disablePane();
         grid = new Disc[COLUMNS][ROWS];
         discRoot.getChildren().clear();
+        computerScore.setText("" + 0);
+        playerScore.setText("" + 0);
         computerAgent.restart();
         // initialize board in backend
         enablePane();
