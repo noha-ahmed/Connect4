@@ -2,9 +2,10 @@ package Backend;
 
 public class Evaluation {
     private static final int QUADRUPLE_SCORE = 100;
-    private static final int TRIPLE_SCORE = 5;
-    private static final int DOUBLE_SCORE = 2;
+    private static final int TRIPLE_SCORE = 20;
+    private static final int DOUBLE_SCORE = 6;
     private static final int WINDOW_SIZE = 4;
+    private static final int MIDDLE_SCORE = 1;
     public static int evaluateScore(int[][] board){
         int evalScore = 0;
 
@@ -25,9 +26,16 @@ public class Evaluation {
                 //Negative diagonal groups check "\"
                 evalScore += evalNDiagonalWindow(board, i, State.COLUMNS_COUNT - j - 1);
             }
+
+        //count pieces in middle
+        for( int i = 0 ; i < State.ROW_COUNT ; i++){
+            if( board[i][State.COLUMNS_COUNT/2] == State.COMPUTER_TURN )
+                evalScore+= MIDDLE_SCORE;
+        }
         
         return evalScore;
     }
+
     private static int evalHorizontalWindow(int[][] board, int startRow, int startColumn){
         int oppPiece = 0;
         int piece = 0;
@@ -43,6 +51,7 @@ public class Evaluation {
         }
         return calculateWeights(piece,oppPiece,empty);
     }
+
 
     private static int evalVerticalWindow(int[][] board, int startRow, int startColumn){
         int compPieces = 0;
