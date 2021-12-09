@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class ComputerAgent implements IComputerAgent {
     IMinimax minimax;
+    int k;
     int level;
     int turns = 0;
     int maxTurns = State.ROW_COUNT * State.COLUMNS_COUNT;
@@ -12,8 +13,9 @@ public class ComputerAgent implements IComputerAgent {
     private int oppScore = 0;
 
     public ComputerAgent(boolean withPruning ,int k){
-        currentState = new State();
-        level = Math.min(k , maxTurns);
+        this.currentState = new State();
+        this.k = k;
+        this.level = Math.min(k , maxTurns);
         if( withPruning )
             minimax = new MinimaxPruning();
         else
@@ -24,13 +26,11 @@ public class ComputerAgent implements IComputerAgent {
         currentState.updateState(playerMove, State.PLAYER_TURN);
         turns++;
         this.oppScore += currentState.getPlayerScore(playerMove, State.PLAYER_TURN);
-        System.out.println("Player Score : " + this.oppScore);
         level = Math.min(level , maxTurns - turns);
         currentState.setEvaluationState(new EvaluationState());
         EvaluationState move = minimax.Decision(currentState, level);
         currentState.updateState(move.getFromColumn(), State.COMPUTER_TURN);
         this.compScore += currentState.getPlayerScore(move.getFromColumn(), State.COMPUTER_TURN);
-        System.out.println("computer score : " + this.compScore);
         turns++;
         currentState.getEvaluationState().printTree();
         return move.getFromColumn();
@@ -45,28 +45,23 @@ public class ComputerAgent implements IComputerAgent {
     public EvaluationState getEvaluationState(){
         return this.currentState.getEvaluationState();
     }
-    public int getOpponentScore(){
-        return this.oppScore;
-    }
-    public int getComputerScore(){
-        return this.compScore;
-    }
     @Override
     public void restart() {
         this.turns = 0;
         this.currentState = new State();
+        this.compScore = 0;
+        this.oppScore = 0;
+        this.level = this.k;
     }
 
     @Override
     public int getComputerScore() {
-        // TODO Auto-generated method stub
-        return 0;
+        return this.compScore;
     }
 
     @Override
     public int getPlayerScore() {
-        // TODO Auto-generated method stub
-        return 0;
+        return this.oppScore;
     }
 }
 

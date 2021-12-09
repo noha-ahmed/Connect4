@@ -23,6 +23,9 @@ public class homePage {
     public void Start(ActionEvent event) {
         Main Scene = new Main();
         try {
+            if(input.getText().equals("")){
+                return;
+            }
             int val = Integer.parseInt(input.getText());
             if (val >= 0) {
                 // warning.setVisible(false);
