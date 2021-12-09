@@ -7,3 +7,6 @@
 << Minimix without Pruning >>  k: 3,  Computer Score: 4,  Player Score: 1,  Max Running Time: 759.00 microseconds, Max Nodes Expanded: 6241,  Average Running Time: 434.00 microseconds, Average Nodes Expanded: 4007
 << Minimix with Pruning >>  k: 4,  Computer Score: 10,  Player Score: 2,  Max Running Time: 2658.00 microseconds, Max Nodes Expanded: 11931,  Average Running Time: 838.00 microseconds, Average Nodes Expanded: 8598
 << Minimix without Pruning >>  k: 4,  Computer Score: 5,  Player Score: 2,  Max Running Time: 3199.00 microseconds, Max Nodes Expanded: 26146,  Average Running Time: 1429.00 microseconds, Average Nodes Expanded: 20040
+<< Minimix without Pruning >>  k: 5,  Computer Score: 2,  Player Score: 1,  Max Running Time: 259987.00 microseconds, Max Nodes Expanded: 135732,  Average Running Time: 40322.00 microseconds, Average Nodes Expanded: 113764
+<< Minimix with Pruning >>  k: 5,  Computer Score: 1,  Player Score: 0,  Max Running Time: 22224.00 microseconds, Max Nodes Expanded: 32336,  Average Running Time: 7035.00 microseconds, Average Nodes Expanded: 26280
+<< Minimix with Pruning >>  k: 6,  Computer Score: 1,  Player Score: 1,  Max Running Time: 171661.00 microseconds, Max Nodes Expanded: 78181,  Average Running Time: 22948.00 microseconds, Average Nodes Expanded: 66899
