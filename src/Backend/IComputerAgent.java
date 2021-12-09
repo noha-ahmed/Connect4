@@ -7,4 +7,5 @@ public interface IComputerAgent {
     public void restart();
     public int getComputerScore();
     public int getPlayerScore();
+    public boolean isValidMove(int playerMove);
 }

@@ -106,6 +106,12 @@ public class ComputerAgent implements IComputerAgent {
         // TODO Auto-generated method stub
         return 0;
     }
+
+    @Override
+    public boolean isValidMove(int playerMove) {
+        // TODO Auto-generated method stub
+        return false;
+    }
 }
 
 class Main2{
