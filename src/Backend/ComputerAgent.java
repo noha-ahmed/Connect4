@@ -66,7 +66,8 @@ public class ComputerAgent implements IComputerAgent {
 
     @Override
     public boolean isValidMove(int playerMove) {
-        // TODO Auto-generated method stub
+        if(this.currentState.getFreeCells()[playerMove] < 6)
+            return true;
         return false;
     }
 }
