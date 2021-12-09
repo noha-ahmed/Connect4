@@ -1,8 +1,9 @@
 package Backend;
 
 public class MinimaxWithoutPruning implements IMinimax{
-
-    public static EvaluationState maximize(State state, int level){
+    private int nodesExpanded = 0;
+    public EvaluationState maximize(State state, int level){
+        nodesExpanded++;
         if(level==0){
             int eval = state.evaluateState();
             state.getEvaluationState().setEvaluationValue(eval);
@@ -24,7 +25,8 @@ public class MinimaxWithoutPruning implements IMinimax{
         return maxChild;
     }
 
-    public static EvaluationState minimize(State state, int level){
+    public EvaluationState minimize(State state, int level){
+        nodesExpanded++;
         if(level==0){
             int eval = state.evaluateState();
             state.getEvaluationState().setEvaluationValue(eval);
@@ -44,6 +46,10 @@ public class MinimaxWithoutPruning implements IMinimax{
             }
         }
         return minChild;
+    }
+
+    public int getNodesExpanded(){
+        return this.nodesExpanded;
     }
 
     @Override

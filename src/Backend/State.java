@@ -89,6 +89,15 @@ public class State implements Cloneable{
     public void setEvaluationState(EvaluationState evaluationState) {
         this.evaluationState = evaluationState;
     }
+
+    public void printBoard(){
+        for( int i = board.length-1 ; i >= 0 ; i-- ){
+            for( int j = 0 ; j < board[0].length ; j++ ){
+                System.out.print(board[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
 }
 class test{
     public static void main(String[] args){

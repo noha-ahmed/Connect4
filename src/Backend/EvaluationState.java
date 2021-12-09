@@ -40,25 +40,20 @@ public class EvaluationState {
 
     public void addChild(EvaluationState child){this.children.add(child);}
 
-    public String toString() {
-        StringBuilder buffer = new StringBuilder(50);
-        print(buffer, "", "" , 1);
-        return buffer.toString();
-    }
     public void printTree(){
-        System.out.println(this.toString());
+        print("", "" , 1);
     }
 
-    private void print(StringBuilder buffer, String prefix, String childrenPrefix , int level) {
-        buffer.append(prefix);
-        buffer.append("(L" + level + ") Move : " + (this.fromColumn + 1) + ", Value : " + this.evaluationValue );
-        buffer.append('\n');
+    private void print( String prefix, String childrenPrefix , int level) {
+        System.out.print(prefix);
+        System.out.print("(L" + level + ") Move : " + (this.fromColumn + 1) + ", Value : " + this.evaluationValue );
+        System.out.println();
         for (Iterator<EvaluationState> it = children.iterator(); it.hasNext();) {
             EvaluationState next = it.next();
             if (it.hasNext()) {
-                next.print(buffer, childrenPrefix + "├── ", childrenPrefix + "│   " , level + 1);
+                next.print(childrenPrefix + "├── ", childrenPrefix + "│   " , level + 1);
             } else {
-                next.print(buffer, childrenPrefix + "└── ", childrenPrefix + "    ",level + 1);
+                next.print(childrenPrefix + "└── ", childrenPrefix + "    ",level + 1);
             }
         }
     }
