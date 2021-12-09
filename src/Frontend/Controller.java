@@ -55,6 +55,10 @@ public class Controller implements Initializable {
     @FXML
     public Label computerScore;
     @FXML
+    public Label level;
+    @FXML
+    public Label strategy;
+    @FXML
     public Pane connect4Pane = new Pane();
     public static Text textWinnerMessage = new Text();
     List<Rectangle> rectangles = new ArrayList<>();
@@ -63,7 +67,7 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        disablePane();
+        //disablePane();
         connect4Pane.getChildren().add(discRoot);
         Shape gridShape = makeGrid();
         connect4Pane.getChildren().add(gridShape);
@@ -77,6 +81,8 @@ public class Controller implements Initializable {
     public void setSettings(String p, String s, int levels) {
         player = p;
         boolean withPruning = false;
+        level.setText("" + levels);
+        strategy.setText(s);
         if (s.equals("with alpha-beta pruning"))
             withPruning = true;
         computerAgent = new ComputerAgent(withPruning, levels);
@@ -128,14 +134,10 @@ public class Controller implements Initializable {
 
     private void initializeGame() {
         disablePane();
-        textWinnerMessage.setVisible(false);
-        restart.setVisible(true);
-        restart.setDisable(false);
         grid = new Disc[COLUMNS][ROWS];
         discRoot.getChildren().clear();
         computerAgent.restart();
         // initialize board in backend
-
         enablePane();
     }
 

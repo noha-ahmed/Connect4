@@ -118,6 +118,92 @@ public class Evaluation {
         return 0;
     }
 
+
+    // calculating score of player
+    public static int calculateMoveScore(int moveColumn, int player, int[][] board, int[] freeCells){
+        int score = 0;
+        int row = freeCells[moveColumn] - 1;
+        int pieces = 0;
+        // if the move made a vertical point
+        if(row >= 3){
+            pieces = countPlayerPieces(row, moveColumn, player, "vertical", board);
+            if(pieces == 4)
+                score ++;
+        }
+        pieces = 0;
+        // if the move made a horizontal point
+        //first piece in 4
+        if(moveColumn <= 3){
+            pieces = countPlayerPieces(row, moveColumn, player, "Horizontal", board);
+            if(pieces == 4)
+                score ++;
+        }
+        pieces = 0;
+        //second piece in 4
+        if(moveColumn >= 1 && moveColumn <= 4){
+            pieces = countPlayerPieces(row, moveColumn - 1, player, "Horizontal", board);
+            if(pieces == 4)
+                score ++;
+        }
+        pieces = 0;
+        //third piece in 4
+        if(moveColumn >= 2 && moveColumn <= 5){
+            pieces = countPlayerPieces(row, moveColumn - 2, player, "Horizontal", board);
+            if(pieces == 4)
+                score ++;
+        }
+        pieces = 0;
+        //fourth piece in 4
+        if(moveColumn >= 3){
+            pieces = countPlayerPieces(row, moveColumn - 3, player, "Horizontal", board);
+            if(pieces == 4)
+                score ++;
+        }
+        // if the move made a positive diagonal point
+        for(int i = 0; i < 4; i++){
+            pieces = 0;
+            if(row < 3 + i && row >= i && moveColumn < 4 + i && moveColumn >= i){
+                pieces = countPlayerPieces(row - i, moveColumn - i, player, "positive diagonal", board);
+            }
+            if(pieces == 4)
+                score++;
+        }
+        // if the move made a negative diagonal point
+        for(int i = 0; i < 4; i++){
+            pieces = 0;
+            if(row > 2 - i && row < State.ROW_COUNT - i && moveColumn < 4 + i && moveColumn > i - 1){
+                pieces = countPlayerPieces(row + i, moveColumn - i, player, "negative diagonal", board);
+            }
+            if(pieces == 4)
+                score++;
+        }
+        return score;
+    }
+    private static int countPlayerPieces(int row, int column, int player, String type, int[][] board){
+        int pieces = 0;
+        if(type.equals("Horizontal")){
+            for(int i = column; i < column + 4; i++){
+                if(board[row][i] == player)
+                    pieces++;
+            }
+        }else if(type.equals("vertical")){
+            for(int i = row; i > row - 4; i--){
+                if(board[i][column] == player)
+                    pieces++;
+            }
+        }else if(type.equals("positive diagonal")){
+            for(int i = row; i < row + 4; i++){
+                if(board[i][column++] == player)
+                    pieces++;
+            }
+        }else if(type.equals("negative diagonal")){
+            for(int i = row; i > row - 4; i--){
+                if(board[i][column++] == player)
+                    pieces++;
+            }
+        }
+        return pieces;
+    }
     public static void printArr( int[][] arr ){
         for( int i = arr.length-1 ; i >= 0 ; i-- ){
             for( int j = 0 ; j < arr[0].length ; j++ ){
@@ -127,7 +213,14 @@ public class Evaluation {
         }
     }
     public static void main(String[] args){
-        int[][] arr = {{1,2,1} , {1,2,3}};
+        int[][] arr = {{0,0,0,1,0,0,0} ,
+                       {0,0,0,0,1,0,0},
+                       {0,0,0,0,0,1,0},
+                       {0,0,0,0,0,0,1},
+                       {0,0,0,0,0,0,0},
+                       {0,0,0,0,0,0,0}};
+        int[] cells = {4,3,2,1,0,0,4};
+        System.out.println(calculateMoveScore(6,1, arr, cells));
         printArr(arr);
     }
 
