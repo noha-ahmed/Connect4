@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class Analysis {
-    private static int testCases = 10;
+    private static int testCases = 3;
     private static int kLimit = 15;
     private static Random rand = new Random();
 
@@ -34,14 +34,15 @@ public class Analysis {
                     end = System.nanoTime();
                     meanTime += (end-start)/21;
                 }
-
+                System.out.println(k+1 + " - " + meanScoreDifference + " - "  + meanTime);
                 meanScoreDifference+= (computerAgent.getComputerScore() - computerAgent.getPlayerScore());
                 meanTime+= (meanTime/testCases);
                 computerAgent.restart();
-            }
+            } 
             meanScoreDifference = meanScoreDifference/testCases;
             scoreDifference[k] = (int) meanScoreDifference;
             time[k] = meanTime;   
+            System.out.println(k+1 + " -> s:" + meanScoreDifference + " - c: "  + meanTime);
         }
         System.out.println("Minimax with Pruning Analysis:/n");
         System.out.println("K Values : " + Arrays.toString(kValues));
@@ -49,7 +50,7 @@ public class Analysis {
         System.out.println("Score Difference : " + Arrays.toString(scoreDifference));
     }
     public static void main(String[] args){
-        
+        analyze(true);
     }
     
 }

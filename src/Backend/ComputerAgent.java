@@ -1,6 +1,9 @@
 package Backend;
 
-import java.util.Scanner;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.text.DecimalFormat;
 
 public class ComputerAgent implements IComputerAgent {
     IMinimax minimax;
@@ -9,13 +12,17 @@ public class ComputerAgent implements IComputerAgent {
     int turns = 0;
     int maxTurns = State.ROW_COUNT * State.COLUMNS_COUNT;
     State currentState;
+    long runningTime;
     private int compScore = 0;
     private int oppScore = 0;
+    private boolean withPruning;
+    private static final DecimalFormat df = new DecimalFormat("0.00");
 
     public ComputerAgent(boolean withPruning ,int k){
         this.currentState = new State();
         this.k = k;
         this.level = Math.min(k , maxTurns);
+        this.withPruning = withPruning;
         if( withPruning )
             minimax = new MinimaxPruning();
         else
@@ -23,16 +30,27 @@ public class ComputerAgent implements IComputerAgent {
     }
 
     public int getNextMove(int playerMove){
+        long start , end;
         currentState.updateState(playerMove, State.PLAYER_TURN);
         turns++;
+        if( turns == maxTurns ){
+            this.writeResultsToFile();
+            return -1;
+        }
         this.oppScore += currentState.getPlayerScore(playerMove, State.PLAYER_TURN);
         level = Math.min(level , maxTurns - turns);
         currentState.setEvaluationState(new EvaluationState());
+        start = System.nanoTime()/1000;
         EvaluationState move = minimax.Decision(currentState, level);
+        end = System.nanoTime()/1000;
         currentState.updateState(move.getFromColumn(), State.COMPUTER_TURN);
         this.compScore += currentState.getPlayerScore(move.getFromColumn(), State.COMPUTER_TURN);
         turns++;
-        currentState.getEvaluationState().printTree();
+        runningTime += (end - start)/21;
+        if( turns == maxTurns )
+            this.writeResultsToFile();
+        
+        //currentState.getEvaluationState().printTree();
         return move.getFromColumn();
     }
 
@@ -69,6 +87,28 @@ public class ComputerAgent implements IComputerAgent {
         if(this.currentState.getFreeCells()[playerMove] < 6)
             return true;
         return false;
+    }
+
+    public void writeResultsToFile(){
+        String sol = "";
+        if( this.withPruning )
+            sol += "<< Minimix with Pruning >>  ";
+        else
+            sol += "<< Minimix without Pruning >>  ";
+        sol += "k: " + this.k + ",  Computer Score: " + this.compScore + ",  Player Score: " 
+        + this.oppScore + ",  Running Time: " + df.format(this.runningTime/1000) + " milliseconds";
+        try {
+            File file = new File("results.txt");
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsoluteFile(),true));
+            bw.write(sol+ "\n");
+            bw.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
 

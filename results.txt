@@ -1,0 +1,1 @@
+<< Minimix with Pruning >>  k: 6,  Computer Score: 12,  Player Score: 0,  Running Time: 14.00 milliseconds
