@@ -13,8 +13,9 @@ public class ComputerAgent implements IComputerAgent {
     int turns = 0;
     int maxTurns = State.ROW_COUNT * State.COLUMNS_COUNT;
     State currentState;
-    long runningTime;
+    long maxRunningTime = Long.MIN_VALUE;
     long prevRunningTime = 0;
+    int maxNodesExpanded = Integer.MIN_VALUE;
     private int compScore = 0;
     private int oppScore = 0;
     private boolean withPruning;
@@ -42,14 +43,19 @@ public class ComputerAgent implements IComputerAgent {
         this.oppScore += currentState.getPlayerScore(playerMove, State.PLAYER_TURN);
         level = Math.min(level , maxTurns - turns);
         currentState.setEvaluationState(new EvaluationState());
-        start = System.nanoTime()/1000000;
+        start = System.nanoTime()/1000;
         EvaluationState move = minimax.Decision(currentState, level);
-        end = System.nanoTime()/1000000;
+        end = System.nanoTime()/1000;
         currentState.updateState(move.getFromColumn(), State.COMPUTER_TURN);
         this.compScore += currentState.getPlayerScore(move.getFromColumn(), State.COMPUTER_TURN);
         turns++;
         prevRunningTime = (end-start);
-        runningTime += (end - start)/21;
+        if( prevRunningTime > maxRunningTime ){
+            maxRunningTime = prevRunningTime;
+        }
+        if( minimax.getNodesExpanded() > maxNodesExpanded ){
+            maxNodesExpanded = minimax.getNodesExpanded();
+        }
         if( turns == maxTurns )
             this.writeResultsToFile();
         
@@ -72,6 +78,8 @@ public class ComputerAgent implements IComputerAgent {
         this.currentState = new State();
         this.compScore = 0;
         this.oppScore = 0;
+        this.maxRunningTime = Long.MIN_VALUE;
+        this.maxNodesExpanded = Integer.MIN_VALUE;
         this.level = this.k;
     }
 
@@ -116,7 +124,7 @@ public class ComputerAgent implements IComputerAgent {
         else
             sol += "<< Minimix without Pruning >>  ";
         sol += "k: " + this.k + ",  Computer Score: " + this.compScore + ",  Player Score: " + this.oppScore + 
-        ",  Running Time: " + df.format(this.runningTime) + " milliseconds, NodesExpanded: " + this.minimax.getNodesExpanded();
+        ",  Max Running Time: " + df.format(this.maxRunningTime) + " microseconds, Max Nodes Expanded: " + this.maxNodesExpanded;
         try {
             File file = new File("results.txt");
             if (!file.exists()) {
@@ -150,7 +158,7 @@ class Main2{
             }
             int compMove = game.getNextMove(oppMove);
             System.out.println("computer move at: " + compMove);
-            System.out.println("Thinking Time: " + game.getPrevRunningTime() + " milliseconds");
+            System.out.println("Thinking Time: " + game.getPrevRunningTime() + " microseconds");
             System.out.println("Nodes Expanded: " + game.getNodesExpanded());
            // game.printTree();
         }

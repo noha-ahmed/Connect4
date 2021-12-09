@@ -1,1 +1,5 @@
 << Minimix with Pruning >>  k: 6,  Computer Score: 12,  Player Score: 0,  Running Time: 14.00 milliseconds
+<< Minimix without Pruning >>  k: 3,  Computer Score: 1,  Player Score: 4,  Running Time: 0.00 milliseconds, NodesExpanded: 3757
+<< Minimix without Pruning >>  k: 3,  Computer Score: 11,  Player Score: 2,  Running Time: 873.00 microseconds, NodesExpanded: 4678
+<< Minimix with Pruning >>  k: 3,  Computer Score: 7,  Player Score: 2,  Running Time: 454.00 microseconds, NodesExpanded: 1434
+<< Minimix with Pruning >>  k: 3,  Computer Score: 14,  Player Score: 2,  Max Running Time: 1448.00 microseconds, Max Nodes Expanded: 2729
