@@ -1,4 +1,5 @@
 # Connect4
+Report Link: https://docs.google.com/document/d/1VnHrdqu0nAQ2ui8R22Lk9JqJy-6ALMr3V4Fgph0nvwM/edit?usp=sharing
 - A single-player mode against a computer agent implemented using Minimax algorithm.<br /> 
 - Minimax algorithm implemented and analyzed at different levels with pruning and without pruning.<br /> 
 - Highest Acceptable level in case of minimax with pruning: 10 levels.<br /> 
